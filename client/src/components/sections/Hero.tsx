@@ -1,0 +1,126 @@
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ListFilter } from "lucide-react";
+
+import heroBg from "@assets/generated_images/modern_luxury_apartment_building_exterior_at_sunset.png";
+
+export function Hero() {
+  return (
+    <section className="relative min-h-[90vh] flex items-center pt-32 pb-20 overflow-hidden">
+      {/* Background with Gradient Overlay */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={heroBg} 
+          alt="Luxury Building" 
+          className="w-full h-full object-cover"
+        />
+        {/* The deep red gradient overlay from the design */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(350,85%,10%)] via-[hsl(350,85%,15%)]/95 to-transparent z-10" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-2xl space-y-8 animate-in slide-in-from-left duration-700">
+          <div className="relative">
+             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-medium text-white leading-[1.1]">
+              Seja bem-vindo a <br />
+              uma nova Experiência <br />
+              <span className="font-bold">Imobiliária</span>
+            </h1>
+            
+            {/* Circular Badge */}
+            <div className="absolute -top-10 -right-4 md:-right-20 hidden md:flex items-center justify-center w-32 h-32 rounded-full border border-white/20 animate-spin-slow">
+              <svg viewBox="0 0 100 100" className="w-full h-full absolute animate-[spin_10s_linear_infinite]">
+                <defs>
+                  <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
+                </defs>
+                <text fontSize="11" fill="white">
+                  <textPath xlinkHref="#circle" className="uppercase tracking-widest font-medium">
+                    Salomon Realty • a arte de vender imóveis •
+                  </textPath>
+                </text>
+              </svg>
+              <div className="w-12 h-12 border-2 border-[#d48c5e] rotate-45 flex items-center justify-center">
+                 <div className="w-8 h-8 border border-[#d48c5e] flex items-center justify-center">
+                    <span className="text-[#d48c5e] font-serif text-xl">S</span>
+                 </div>
+              </div>
+            </div>
+          </div>
+
+          <p className="text-white/80 text-lg font-light leading-relaxed max-w-lg">
+            Na Salomon Realty, oferecemos uma experiência de compra e venda de imóveis inovadora, disruptiva e personalizada, unindo segurança e transparência com o uso de tecnologia e IA.
+          </p>
+
+          {/* Search Box - Floating Card */}
+          <div className="bg-white rounded-lg shadow-2xl p-4 md:p-6 mt-12 w-[120%] -ml-[10%] lg:w-[140%] lg:ml-0 max-w-[1200px] transform translate-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">Tipo de Negócios</label>
+                <Select>
+                  <SelectTrigger className="w-full border-gray-200 bg-gray-50/50">
+                    <SelectValue placeholder="Selecione..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="venda">Venda</SelectItem>
+                    <SelectItem value="aluguel">Aluguel</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">Tipo de Imóveis</label>
+                <Select>
+                  <SelectTrigger className="w-full border-gray-200 bg-gray-50/50">
+                    <SelectValue placeholder="Selecione..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="casa">Casa</SelectItem>
+                    <SelectItem value="apartamento">Apartamento</SelectItem>
+                    <SelectItem value="terreno">Terreno</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">Cidade</label>
+                <Select>
+                  <SelectTrigger className="w-full border-gray-200 bg-gray-50/50">
+                    <SelectValue placeholder="Selecione a Cidade" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="luanda">Luanda</SelectItem>
+                    <SelectItem value="talatona">Talatona</SelectItem>
+                    <SelectItem value="belas">Belas</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">Bairro</label>
+                <Select>
+                  <SelectTrigger className="w-full border-gray-200 bg-gray-50/50">
+                    <SelectValue placeholder="Selecione o Bairro" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="miramar">Miramar</SelectItem>
+                    <SelectItem value="patriota">Patriota</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <button className="text-xs text-gray-400 hover:text-red-500 uppercase font-medium underline decoration-dotted underline-offset-4">
+                  Remover
+                </button>
+                <Button className="flex-1 bg-[#d48c5e] hover:bg-[#c07b50] text-white font-bold uppercase tracking-widest text-xs h-10 shadow-md hover:shadow-lg transition-all">
+                  <ListFilter className="w-4 h-4 mr-2" />
+                  Mais Filtros
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
