@@ -25,7 +25,7 @@ export function Header() {
         isScrolled ? "bg-[hsl(350,85%,15%)]/95 backdrop-blur-md py-2 shadow-lg" : "bg-transparent py-6"
       )}
     >
-      <div className={cn("container mx-auto px-4 flex justify-between items-center relative transition-all duration-300", isScrolled ? "h-14" : "h-20")}>
+      <div className={cn("container mx-auto px-4 flex items-center relative transition-all duration-300", isScrolled ? "h-14" : "h-20")}>
         {/* Logo - Aligned Left */}
         <Link href="/">
           <a className="flex items-center gap-3 group">
@@ -34,7 +34,7 @@ export function Header() {
         </Link>
 
         {/* Navigation - Center */}
-        <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-white font-sans text-sm font-medium tracking-widest uppercase">
+        <nav className="hidden lg:flex items-center gap-6 ml-16 text-white font-sans text-sm font-medium tracking-widest uppercase">
           <Link href="/"><a className="hover:text-[#d48c5e] transition-colors">Home</a></Link>
           <Link href="/about"><a className="hover:text-[#d48c5e] transition-colors">Quem Somos</a></Link>
           <Link href="/services"><a className="hover:text-[#d48c5e] transition-colors">Serviços</a></Link>
@@ -43,7 +43,7 @@ export function Header() {
         </nav>
 
         {/* Right Side - Top Right */}
-        <div className="hidden lg:flex items-center gap-6 text-white text-xs font-sans tracking-wide">
+        <div className="hidden lg:flex items-center gap-6 ml-auto text-white text-xs font-sans tracking-wide">
            <div className="flex items-center gap-2">
             <div className="bg-[#d48c5e] rounded-full p-1">
               <Phone className="w-3 h-3 text-white" />
