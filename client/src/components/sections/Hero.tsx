@@ -19,6 +19,25 @@ export function Hero() {
       </div>
 
       <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-2 gap-12 items-center">
+        {/* Circular Badge - Centered in Hero */}
+        <div className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 z-30 hidden lg:flex items-center justify-center w-40 h-40 rounded-full border border-white/20 animate-spin-slow pointer-events-none">
+            <svg viewBox="0 0 100 100" className="w-full h-full absolute animate-[spin_10s_linear_infinite]">
+            <defs>
+                <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
+            </defs>
+            <text fontSize="11" fill="white">
+                <textPath xlinkHref="#circle" className="uppercase tracking-widest font-medium">
+                Salomon Realty • a arte de vender imóveis •
+                </textPath>
+            </text>
+            </svg>
+            <div className="w-16 h-16 border-2 border-[#d48c5e] rotate-45 flex items-center justify-center">
+                <div className="w-10 h-10 border border-[#d48c5e] flex items-center justify-center">
+                <span className="text-[#d48c5e] font-serif text-2xl">S</span>
+                </div>
+            </div>
+        </div>
+
         <div className="max-w-2xl space-y-8 animate-in slide-in-from-left duration-700">
           <div className="relative">
              <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-medium text-white leading-[1.1]">
@@ -26,25 +45,6 @@ export function Hero() {
               uma nova Experiência <br />
               <span className="font-bold">Imobiliária</span>
             </h1>
-            
-            {/* Circular Badge */}
-            <div className="absolute -top-10 -right-4 md:-right-20 hidden md:flex items-center justify-center w-32 h-32 rounded-full border border-white/20 animate-spin-slow">
-              <svg viewBox="0 0 100 100" className="w-full h-full absolute animate-[spin_10s_linear_infinite]">
-                <defs>
-                  <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
-                </defs>
-                <text fontSize="11" fill="white">
-                  <textPath xlinkHref="#circle" className="uppercase tracking-widest font-medium">
-                    Salomon Realty • a arte de vender imóveis •
-                  </textPath>
-                </text>
-              </svg>
-              <div className="w-12 h-12 border-2 border-[#d48c5e] rotate-45 flex items-center justify-center">
-                 <div className="w-8 h-8 border border-[#d48c5e] flex items-center justify-center">
-                    <span className="text-[#d48c5e] font-serif text-xl">S</span>
-                 </div>
-              </div>
-            </div>
           </div>
 
           <p className="text-white/80 text-lg font-light leading-relaxed max-w-lg">
