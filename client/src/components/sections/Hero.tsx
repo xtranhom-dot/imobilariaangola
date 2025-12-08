@@ -15,7 +15,7 @@ export function Hero() {
           className="w-full h-full object-cover"
         />
         {/* The deep red gradient overlay from the design */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(350,85%,10%)] via-[hsl(350,85%,15%)]/95 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-transparent z-10" />
       </div>
 
       <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-2 gap-12 items-center">

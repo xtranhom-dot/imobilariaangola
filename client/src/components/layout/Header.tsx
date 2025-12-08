@@ -22,28 +22,28 @@ export function Header() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full",
-        isScrolled ? "bg-[hsl(350,85%,15%)]/95 backdrop-blur-md py-2 shadow-lg" : "bg-transparent py-6"
+        isScrolled ? "bg-black/95 backdrop-blur-md py-2 shadow-lg" : "bg-transparent py-6"
       )}
     >
-      <div className={cn("container mx-auto px-4 flex items-center relative transition-all duration-300", isScrolled ? "h-14" : "h-20")}>
+      <div className={cn("container mx-auto px-4 flex items-end relative transition-all duration-300", isScrolled ? "h-14" : "h-20")}>
         {/* Logo - Aligned Left */}
         <Link href="/">
-          <a className="flex items-center gap-3 group">
+          <a className="flex items-end gap-3 group h-full">
             <img src={logo} alt="Angola Imobiliária" className="h-12 md:h-14 w-auto object-contain" />
           </a>
         </Link>
 
         {/* Navigation - Center */}
-        <nav className="hidden lg:flex items-center gap-6 ml-16 text-white font-sans text-sm font-medium tracking-widest uppercase">
-          <Link href="/"><a className="hover:text-[#d48c5e] transition-colors">Home</a></Link>
-          <Link href="/about"><a className="hover:text-[#d48c5e] transition-colors">Quem Somos</a></Link>
-          <Link href="/services"><a className="hover:text-[#d48c5e] transition-colors">Serviços</a></Link>
-          <Link href="/properties"><a className="hover:text-[#d48c5e] transition-colors">Imóveis</a></Link>
-          <Link href="/contact"><a className="hover:text-[#d48c5e] transition-colors">Contato</a></Link>
+        <nav className="hidden lg:flex items-center gap-6 ml-16 text-[#d48c5e] font-sans text-sm font-medium tracking-widest uppercase mb-4">
+          <Link href="/"><a className="hover:text-white transition-colors">Home</a></Link>
+          <Link href="/about"><a className="hover:text-white transition-colors">Quem Somos</a></Link>
+          <Link href="/services"><a className="hover:text-white transition-colors">Serviços</a></Link>
+          <Link href="/properties"><a className="hover:text-white transition-colors">Imóveis</a></Link>
+          <Link href="/contact"><a className="hover:text-white transition-colors">Contato</a></Link>
         </nav>
 
         {/* Right Side - Top Right */}
-        <div className="hidden lg:flex items-center gap-6 ml-auto text-white text-xs font-sans tracking-wide">
+        <div className="hidden lg:flex items-center gap-6 ml-auto text-white text-xs font-sans tracking-wide mb-4">
            <div className="flex items-center gap-2">
             <div className="bg-[#d48c5e] rounded-full p-1">
               <Phone className="w-3 h-3 text-white" />
