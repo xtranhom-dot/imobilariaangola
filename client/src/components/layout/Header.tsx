@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 
+import logo from "@assets/Design_sem_nome-removebg-preview_1765217312472.png";
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -27,17 +29,7 @@ export function Header() {
         {/* Logo - Aligned Left */}
         <Link href="/">
           <a className="flex items-center gap-3 group">
-            <div className="border-2 border-white p-1 rounded-sm">
-              <div className="grid grid-cols-2 gap-0.5">
-                <div className="w-2 h-2 bg-white rounded-tl-sm"></div>
-                <div className="w-2 h-2 border border-white rounded-tr-sm"></div>
-                <div className="w-2 h-2 border border-white rounded-bl-sm"></div>
-                <div className="w-2 h-2 bg-white rounded-br-sm"></div>
-              </div>
-            </div>
-            <div className="flex flex-col text-white">
-              <span className="font-serif text-2xl leading-none tracking-wide">Angola Imobiliária</span>
-            </div>
+            <img src={logo} alt="Angola Imobiliária" className="h-12 w-auto object-contain" />
           </a>
         </Link>
 
