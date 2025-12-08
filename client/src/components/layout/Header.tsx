@@ -28,8 +28,8 @@ export function Header() {
       <div className={cn("container mx-auto px-4 flex justify-between items-center relative transition-all duration-300", isScrolled ? "h-14" : "h-20")}>
         {/* Logo - Aligned Left */}
         <Link href="/">
-          <a className="flex items-center gap-3 group h-full">
-            <img src={logo} alt="Angola Imobiliária" className="h-full w-auto object-contain py-1 scale-125 origin-left" />
+          <a className="flex items-center gap-3 group">
+            <img src={logo} alt="Angola Imobiliária" className="h-12 md:h-14 w-auto object-contain" />
           </a>
         </Link>
 
