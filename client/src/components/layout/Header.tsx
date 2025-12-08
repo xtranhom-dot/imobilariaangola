@@ -23,7 +23,7 @@ export function Header() {
         isScrolled ? "bg-[hsl(350,85%,15%)]/95 backdrop-blur-md py-2 shadow-lg" : "bg-transparent py-6"
       )}
     >
-      <div className="container mx-auto px-4 flex justify-between items-center relative h-20">
+      <div className={cn("container mx-auto px-4 flex justify-between items-center relative transition-all duration-300", isScrolled ? "h-14" : "h-20")}>
         {/* Logo - Aligned Left */}
         <Link href="/">
           <a className="flex items-center gap-3 group">
