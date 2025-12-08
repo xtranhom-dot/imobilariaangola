@@ -23,7 +23,7 @@ export function Header() {
         isScrolled ? "bg-[hsl(350,85%,15%)]/95 backdrop-blur-md py-2 shadow-lg" : "bg-transparent py-6"
       )}
     >
-      <div className="container mx-auto px-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 flex justify-between items-center relative h-20">
         {/* Logo - Aligned Left */}
         <Link href="/">
           <a className="flex items-center gap-3 group">
@@ -41,41 +41,38 @@ export function Header() {
           </a>
         </Link>
 
-        {/* Right Side Container (Desktop) */}
-        <div className="hidden lg:flex flex-col items-end gap-3">
-          {/* Top Row: Contact & Socials */}
-          <div className="flex items-center gap-6 text-white text-xs font-sans tracking-wide">
-             <div className="flex items-center gap-2">
-              <div className="bg-[#d48c5e] rounded-full p-1">
-                <Phone className="w-3 h-3 text-white" />
-              </div>
-              <div className="flex flex-col leading-tight">
-                <span className="opacity-80 text-[10px]">WHATSAPP</span>
-                <span className="font-bold">(47) 9.9241-5996</span>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-3">
-              <a href="#" className="hover:text-[#d48c5e] transition-colors"><Facebook className="w-4 h-4" /></a>
-              <a href="#" className="hover:text-[#d48c5e] transition-colors"><Instagram className="w-4 h-4" /></a>
-              <a href="#" className="hover:text-[#d48c5e] transition-colors"><Linkedin className="w-4 h-4" /></a>
-              <a href="#" className="hover:text-[#d48c5e] transition-colors"><Youtube className="w-4 h-4" /></a>
-            </div>
+        {/* Navigation - Center */}
+        <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-8 text-white font-sans text-sm font-medium tracking-widest uppercase">
+          <Link href="/"><a className="hover:text-[#d48c5e] transition-colors">Home</a></Link>
+          <Link href="/about"><a className="hover:text-[#d48c5e] transition-colors">Quem Somos</a></Link>
+          <Link href="/services"><a className="hover:text-[#d48c5e] transition-colors">Serviços</a></Link>
+          <Link href="/properties"><a className="hover:text-[#d48c5e] transition-colors">Imóveis</a></Link>
+          <Link href="/contact"><a className="hover:text-[#d48c5e] transition-colors">Contato</a></Link>
+        </nav>
 
-            <div className="flex items-center gap-2 border-l border-white/20 pl-4">
-              <img src="https://flagcdn.com/w40/br.png" alt="Português" className="w-5 h-auto rounded-sm opacity-100" />
-              <img src="https://flagcdn.com/w40/pt.png" alt="Portugal" className="w-5 h-auto rounded-sm opacity-50 hover:opacity-100 transition-opacity cursor-pointer" />
+        {/* Right Side - Top Right */}
+        <div className="hidden lg:flex items-center gap-6 text-white text-xs font-sans tracking-wide">
+           <div className="flex items-center gap-2">
+            <div className="bg-[#d48c5e] rounded-full p-1">
+              <Phone className="w-3 h-3 text-white" />
+            </div>
+            <div className="flex flex-col leading-tight">
+              <span className="opacity-80 text-[10px]">WHATSAPP</span>
+              <span className="font-bold">(47) 9.9241-5996</span>
             </div>
           </div>
+          
+          <div className="flex items-center gap-3">
+            <a href="#" className="hover:text-[#d48c5e] transition-colors"><Facebook className="w-4 h-4" /></a>
+            <a href="#" className="hover:text-[#d48c5e] transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="#" className="hover:text-[#d48c5e] transition-colors"><Linkedin className="w-4 h-4" /></a>
+            <a href="#" className="hover:text-[#d48c5e] transition-colors"><Youtube className="w-4 h-4" /></a>
+          </div>
 
-          {/* Bottom Row: Navigation */}
-          <nav className="flex items-center gap-8 text-white font-sans text-sm font-medium tracking-widest uppercase">
-            <Link href="/"><a className="hover:text-[#d48c5e] transition-colors">Home</a></Link>
-            <Link href="/about"><a className="hover:text-[#d48c5e] transition-colors">Quem Somos</a></Link>
-            <Link href="/services"><a className="hover:text-[#d48c5e] transition-colors">Serviços</a></Link>
-            <Link href="/properties"><a className="hover:text-[#d48c5e] transition-colors">Imóveis</a></Link>
-            <Link href="/contact"><a className="hover:text-[#d48c5e] transition-colors">Contato</a></Link>
-          </nav>
+          <div className="flex items-center gap-2 border-l border-white/20 pl-4">
+            <img src="https://flagcdn.com/w40/br.png" alt="Português" className="w-5 h-auto rounded-sm opacity-100" />
+            <img src="https://flagcdn.com/w40/pt.png" alt="Portugal" className="w-5 h-auto rounded-sm opacity-50 hover:opacity-100 transition-opacity cursor-pointer" />
+          </div>
         </div>
 
         {/* Mobile Menu Toggle */}
