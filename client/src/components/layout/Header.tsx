@@ -29,7 +29,10 @@ export function Header() {
         {/* Logo - Aligned Left */}
         <Link href="/">
           <a className="flex items-center gap-3 group">
-            <img src={logo} alt="Angola Imobiliária" className="h-12 w-auto object-contain" />
+            <img src={logo} alt="Angola Imobiliária" className="h-16 w-auto object-contain" />
+            <div className="flex flex-col text-white">
+              <span className="font-serif text-2xl leading-none tracking-wide">Angola Imobiliária</span>
+            </div>
           </a>
         </Link>
 
