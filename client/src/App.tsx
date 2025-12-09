@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import PropertyDetails from "@/pages/property-details";
 import NotFound from "@/pages/not-found";
+import PrivacyPolicy from "@/pages/privacy-policy";
 
 // Admin Pages
 import AdminDashboard from "@/pages/admin/dashboard";
@@ -21,6 +22,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/property/:id" component={PropertyDetails} />
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
       
       {/* Admin Routes */}
       <Route path="/admin" component={AdminLogin} />

@@ -99,8 +99,10 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-white/40 font-sans gap-4">
-          <p>© 2024 - Angola Imobiliária - Todos os direitos reservados.</p>
-          <a href="#" className="hover:text-white">Política de Privacidade</a>
+          <p>© 2026 - Angola Imobiliária - Todos os direitos reservados. Desenvolvido por kysdigital.corp</p>
+          <Link href="/privacy-policy">
+            <a className="hover:text-white">Política de Privacidade</a>
+          </Link>
         </div>
       </div>
     </footer>
