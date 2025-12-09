@@ -25,8 +25,8 @@ export function Hero() {
           <div className="relative">
              <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-white leading-[1.1]">
               Seja bem-vindo a <br />
-              uma nova Experiência <br />
-              <span className="font-bold">Imobiliária</span>
+              
+              <span className="font-bold">Angola Imobiliária</span>
             </h1>
           </div>
 
