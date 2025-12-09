@@ -32,13 +32,6 @@ export function Footer() {
                 <img src={logo} alt="Angola Imobiliária" className="h-16 w-auto object-contain brightness-0 invert" />
               </a>
             </Link>
-            
-            <div className="flex gap-2">
-              <img src="https://flagcdn.com/w40/br.png" alt="Brazil" className="w-8 rounded-sm" />
-              <img src="https://flagcdn.com/w40/pt.png" alt="Portugal" className="w-8 rounded-sm" />
-            </div>
-            
-            <p className="text-white/60 text-sm">CRECI 8540J</p>
           </div>
 
           {/* Contact */}
