@@ -18,7 +18,6 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
   const menuItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
     { icon: Building2, label: "Imóveis", href: "/admin/properties" },
-    { icon: Users, label: "Clientes", href: "/admin/clients" },
     { icon: MessageSquare, label: "Mensagens", href: "/admin/messages" },
     { icon: MapPin, label: "Localizações", href: "/admin/locations" },
     { icon: Settings, label: "Configurações", href: "/admin/settings" },

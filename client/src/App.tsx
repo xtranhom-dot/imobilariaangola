@@ -12,6 +12,8 @@ import AdminDashboard from "@/pages/admin/dashboard";
 import AdminProperties from "@/pages/admin/properties";
 import AdminPropertyForm from "@/pages/admin/property-form";
 import AdminLocations from "@/pages/admin/locations";
+import AdminMessages from "@/pages/admin/messages";
+import AdminSettings from "@/pages/admin/settings";
 
 function Router() {
   return (
@@ -24,6 +26,8 @@ function Router() {
       <Route path="/admin/properties" component={AdminProperties} />
       <Route path="/admin/properties/new" component={AdminPropertyForm} />
       <Route path="/admin/locations" component={AdminLocations} />
+      <Route path="/admin/messages" component={AdminMessages} />
+      <Route path="/admin/settings" component={AdminSettings} />
       
       <Route component={NotFound} />
     </Switch>
