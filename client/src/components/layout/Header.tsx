@@ -77,7 +77,7 @@ export function Header() {
 
         {/* Mobile Menu Toggle */}
         <button 
-          className="lg:hidden text-white"
+          className="lg:hidden text-white ml-auto mb-4"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X /> : <Menu />}
