@@ -33,7 +33,7 @@ export function Testimonials() {
         <Carousel className="w-full max-w-6xl mx-auto">
           <CarouselContent>
             {TESTIMONIALS.map((t, index) => (
-              <CarouselItem key={index} className="md:basis-1/3 pl-8">
+              <CarouselItem key={index} className="basis-full md:basis-1/2 lg:basis-1/3 pl-8">
                 <div className="flex flex-col items-center text-center space-y-6">
                   {/* Icon Box */}
                   <div className="w-20 h-20 border-2 border-white/20 p-4 rounded-sm flex items-center justify-center relative">

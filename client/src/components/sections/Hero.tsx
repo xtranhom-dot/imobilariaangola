@@ -7,7 +7,7 @@ import heroBg from "@/assets/luanda-hero.jpg";
 
 export function Hero() {
   return (
-    <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-20 overflow-hidden">
+    <section id="home" className="relative min-h-[90vh] flex items-center pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden">
       {/* Background with Gradient Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -35,8 +35,8 @@ export function Hero() {
           </p>
 
           {/* Search Box - Floating Card */}
-          <div className="bg-white rounded-lg shadow-2xl p-4 md:p-6 mt-6 w-[120%] -ml-[10%] lg:w-[140%] lg:ml-0 max-w-[1200px]">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+          <div className="bg-white rounded-lg shadow-2xl p-4 md:p-6 mt-8 w-full md:w-[120%] md:-ml-[10%] lg:w-[140%] lg:ml-0 max-w-[1200px] mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
               <div className="space-y-1">
                 <label className="text-xs font-bold uppercase tracking-widest text-[#FFD700]">Tipo de Negócios</label>
                 <Select>
