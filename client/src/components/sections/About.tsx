@@ -2,7 +2,7 @@ import teamImage from "@assets/generated_images/professional_real_estate_team_of
 
 export function About() {
   return (
-    <section className="py-24 bg-black text-white overflow-hidden relative">
+    <section id="about" className="py-24 bg-black text-white overflow-hidden relative">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-[#FFD700]/10 -skew-x-12 translate-x-1/4 z-0" />
 

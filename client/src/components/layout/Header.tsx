@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Phone, Facebook, Instagram, Linkedin, Youtube, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 
 import logo from "@assets/Design_sem_nome-removebg-preview_1_1765217810301.png";
@@ -9,6 +9,7 @@ import logo from "@assets/Design_sem_nome-removebg-preview_1_1765217810301.png";
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [location] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +18,19 @@ export function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleScrollToAbout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location !== "/") {
+      window.location.href = "/#about";
+    } else {
+      const element = document.getElementById("about");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <header
@@ -36,7 +50,7 @@ export function Header() {
         {/* Navigation - Center */}
         <nav className="hidden lg:flex items-center gap-6 ml-16 text-[#FFD700] font-sans text-sm font-medium tracking-widest uppercase mb-4">
           <Link href="/"><a className="hover:text-white transition-colors">Home</a></Link>
-          <Link href="/about"><a className="hover:text-white transition-colors">Quem Somos</a></Link>
+          <a href="/#about" onClick={handleScrollToAbout} className="hover:text-white transition-colors cursor-pointer">Quem Somos</a>
           <Link href="/services"><a className="hover:text-white transition-colors">Serviços</a></Link>
           <Link href="/properties"><a className="hover:text-white transition-colors">Imóveis</a></Link>
           <Link href="/contact"><a className="hover:text-white transition-colors">Contato</a></Link>
@@ -75,7 +89,7 @@ export function Header() {
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 w-full bg-black border-t border-white/10 p-6 flex flex-col gap-4 lg:hidden animate-in slide-in-from-top-5">
           <Link href="/"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Home</a></Link>
-          <Link href="/about"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Quem Somos</a></Link>
+          <a href="/#about" onClick={handleScrollToAbout} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Quem Somos</a>
           <Link href="/services"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Serviços</a></Link>
           <Link href="/properties"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Imóveis</a></Link>
           <Link href="/contact"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Contato</a></Link>
