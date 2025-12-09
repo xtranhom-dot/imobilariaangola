@@ -4,7 +4,6 @@ import { ListFilter } from "lucide-react";
 
 import heroBg from "@/assets/luanda-hero.jpg";
 
-import logo from "@assets/Design_sem_nome-removebg-preview_1_1765217810301.png";
 
 export function Hero() {
   return (
@@ -21,12 +20,6 @@ export function Hero() {
       </div>
 
       <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-2 gap-12 items-center">
-        {/* Circular Badge - Centered in Hero */}
-        <div className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 z-30 hidden lg:flex items-center justify-center w-40 h-40 rounded-full border border-white/20 animate-spin-slow pointer-events-none">
-            <div className="w-32 h-32 flex items-center justify-center">
-                <img src={logo} alt="Angola Imobiliária" className="w-full h-full object-contain" />
-            </div>
-        </div>
 
         <div className="max-w-2xl space-y-5 animate-in slide-in-from-left duration-700">
           <div className="relative">
