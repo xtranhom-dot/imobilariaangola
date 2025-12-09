@@ -1,4 +1,37 @@
-import { Camera, BarChart3 } from "lucide-react";
+import { Camera, BarChart3, Home, Key, ClipboardCheck, Hammer, FileText } from "lucide-react";
+
+const services = [
+  {
+    title: "Vendas de imóveis",
+    description: "Encontre o imóvel dos seus sonhos ou venda o seu com a máxima eficiência e segurança, com o apoio da nossa equipa especializada.",
+    image: "/attached_assets/generated_images/real_estate_sales_concept_with_luxury_home.png",
+    icon: Home
+  },
+  {
+    title: "Arrendamentos de imóveis",
+    description: "Opções variadas de arrendamento residencial e comercial para quem busca flexibilidade, conforto e as melhores localizações.",
+    image: "/attached_assets/generated_images/real_estate_rental_concept_with_keys.png",
+    icon: Key
+  },
+  {
+    title: "Avaliação de imóveis",
+    description: "Avaliação precisa e técnica do seu imóvel para garantir o preço justo de mercado, fundamental para vendas e seguros.",
+    image: "/attached_assets/generated_images/real_estate_appraisal_concept.png",
+    icon: ClipboardCheck
+  },
+  {
+    title: "Manutenção de Imóveis",
+    description: "Serviços completos de manutenção preventiva e corretiva para valorizar, conservar e garantir a longevidade do seu patrimônio.",
+    image: "/attached_assets/generated_images/property_maintenance_concept.png",
+    icon: Hammer
+  },
+  {
+    title: "Plantas de Imóveis",
+    description: "Desenvolvimento e análise técnica de plantas arquitetônicas para legalização, reformas ou novas construções.",
+    image: "/attached_assets/generated_images/architectural_floor_plans.png",
+    icon: FileText
+  }
+];
 
 export function Services() {
   return (
@@ -10,36 +43,29 @@ export function Services() {
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <h2 className="font-serif text-4xl text-black font-medium">Conheça os nossos serviços</h2>
           <p className="text-gray-500 text-sm leading-relaxed">
-            Sempre em busca do que há de melhor e mais moderno no mercado imobiliário, a Angola Imobiliária possui ferramentas e tecnologias que contribuem no processo de compra e venda, além de valorizar o seu imóvel.
+            Oferecemos uma gama completa de serviços imobiliários, desde a mediação na compra e venda até a gestão e manutenção do seu imóvel.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-          {/* Service 1 */}
-          <div className="relative group">
-            <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-lg mb-6">
-               <img src="/attached_assets/generated_images/luxury_living_room_interior.png" alt="Estudo de Mercado" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center items-start max-w-7xl mx-auto">
+          {services.map((service, index) => (
+            <div key={index} className="relative group flex flex-col h-full">
+              <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-lg mb-6 relative">
+                 <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-300 z-10" />
+                 <img 
+                   src={service.image} 
+                   alt={service.title} 
+                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                 />
+              </div>
+              <div className="space-y-3 flex-grow">
+                 <h3 className="font-serif text-2xl text-black font-bold border-b-2 border-[#FFD700] inline-block pb-1">{service.title}</h3>
+                 <p className="text-gray-600 text-sm leading-relaxed">
+                    {service.description}
+                 </p>
+              </div>
             </div>
-            <div className="space-y-3">
-               <h3 className="font-serif text-2xl text-black font-bold border-b-2 border-[#FFD700] inline-block pb-1">Estudo de Mercado</h3>
-               <p className="text-gray-600 text-sm leading-relaxed">
-                  Realização de um Estudo de Mercado do imóvel para criar as melhores estratégias de venda de acordo com o seu objetivo.
-               </p>
-            </div>
-          </div>
-
-          {/* Service 2 */}
-          <div className="relative group md:mt-24">
-            <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-lg mb-6">
-               <img src="/attached_assets/generated_images/luxury_villa_exterior_at_dusk.png" alt="Fotos e Vídeos" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            </div>
-            <div className="space-y-3">
-               <h3 className="font-serif text-2xl text-black font-bold border-b-2 border-[#FFD700] inline-block pb-1">Produção de Fotos e Vídeos</h3>
-               <p className="text-gray-600 text-sm leading-relaxed">
-                  Ferramentas tecnológicas de Produção de Fotos e Vídeos em alta qualidade que geram impacto e despertam interesse do comprador.
-               </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
