@@ -55,10 +55,10 @@ export function Header() {
           </div>
           
           <div className="flex items-center gap-3">
-            <a href="#" className="hover:text-[#d48c5e] transition-colors"><Facebook className="w-4 h-4" /></a>
-            <a href="#" className="hover:text-[#d48c5e] transition-colors"><Instagram className="w-4 h-4" /></a>
-            <a href="#" className="hover:text-[#d48c5e] transition-colors"><Linkedin className="w-4 h-4" /></a>
-            <a href="#" className="hover:text-[#d48c5e] transition-colors"><Youtube className="w-4 h-4" /></a>
+            <a href="#" className="hover:text-[#FFD700] transition-colors"><Facebook className="w-4 h-4" /></a>
+            <a href="#" className="hover:text-[#FFD700] transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="#" className="hover:text-[#FFD700] transition-colors"><Linkedin className="w-4 h-4" /></a>
+            <a href="#" className="hover:text-[#FFD700] transition-colors"><Youtube className="w-4 h-4" /></a>
           </div>
         </div>
 

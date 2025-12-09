@@ -37,7 +37,7 @@ export function Testimonials() {
                 <div className="flex flex-col items-center text-center space-y-6">
                   {/* Icon Box */}
                   <div className="w-20 h-20 border-2 border-white/20 p-4 rounded-sm flex items-center justify-center relative">
-                     <div className="absolute inset-0 bg-[#d48c5e]/20 blur-xl rounded-full"></div>
+                     <div className="absolute inset-0 bg-[#FFD700]/20 blur-xl rounded-full"></div>
                      <div className="grid grid-cols-2 gap-1 w-full h-full relative z-10">
                         <div className="bg-transparent border border-white rounded-tl-md"></div>
                         <div className="bg-white rounded-tr-md"></div>
@@ -50,13 +50,13 @@ export function Testimonials() {
                     "{t.text}"
                   </p>
 
-                  <h4 className="font-bold text-[#d48c5e] uppercase tracking-wider text-sm">{t.name}</h4>
+                  <h4 className="font-bold text-[#FFD700] uppercase tracking-wider text-sm">{t.name}</h4>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex bg-[#d48c5e] border-none text-white hover:bg-[#c07b50]" />
-          <CarouselNext className="hidden md:flex bg-[#d48c5e] border-none text-white hover:bg-[#c07b50]" />
+          <CarouselPrevious className="hidden md:flex bg-[#FFD700] border-none text-white hover:bg-[#c07b50]" />
+          <CarouselNext className="hidden md:flex bg-[#FFD700] border-none text-white hover:bg-[#c07b50]" />
         </Carousel>
       </div>
     </section>

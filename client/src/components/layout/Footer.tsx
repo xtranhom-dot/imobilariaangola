@@ -78,11 +78,11 @@ export function Footer() {
           {/* Links */}
           <div className="space-y-6">
             <div className="grid grid-cols-1 gap-3 font-sans text-sm font-medium uppercase tracking-widest">
-              <Link href="/"><a className="hover:text-[#d48c5e] transition-colors">Home</a></Link>
-              <Link href="/about"><a className="hover:text-[#d48c5e] transition-colors">Quem Somos</a></Link>
-              <Link href="/services"><a className="hover:text-[#d48c5e] transition-colors">Serviços</a></Link>
-              <Link href="/properties"><a className="hover:text-[#d48c5e] transition-colors">Imóveis</a></Link>
-              <Link href="/contact"><a className="hover:text-[#d48c5e] transition-colors">Contato</a></Link>
+              <Link href="/"><a className="hover:text-[#FFD700] transition-colors">Home</a></Link>
+              <Link href="/about"><a className="hover:text-[#FFD700] transition-colors">Quem Somos</a></Link>
+              <Link href="/services"><a className="hover:text-[#FFD700] transition-colors">Serviços</a></Link>
+              <Link href="/properties"><a className="hover:text-[#FFD700] transition-colors">Imóveis</a></Link>
+              <Link href="/contact"><a className="hover:text-[#FFD700] transition-colors">Contato</a></Link>
             </div>
           </div>
 
@@ -105,10 +105,10 @@ export function Footer() {
             <div className="space-y-2">
               <h4 className="font-sans text-xs font-bold uppercase tracking-widest text-white/60">Redes Sociais:</h4>
               <div className="flex gap-4">
-                 <a href="#" className="hover:text-[#d48c5e]"><Facebook className="w-4 h-4" /></a>
-                 <a href="#" className="hover:text-[#d48c5e]"><Instagram className="w-4 h-4" /></a>
-                 <a href="#" className="hover:text-[#d48c5e]"><Linkedin className="w-4 h-4" /></a>
-                 <a href="#" className="hover:text-[#d48c5e]"><Youtube className="w-4 h-4" /></a>
+                 <a href="#" className="hover:text-[#FFD700]"><Facebook className="w-4 h-4" /></a>
+                 <a href="#" className="hover:text-[#FFD700]"><Instagram className="w-4 h-4" /></a>
+                 <a href="#" className="hover:text-[#FFD700]"><Linkedin className="w-4 h-4" /></a>
+                 <a href="#" className="hover:text-[#FFD700]"><Youtube className="w-4 h-4" /></a>
               </div>
             </div>
           </div>

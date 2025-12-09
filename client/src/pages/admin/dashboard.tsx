@@ -75,7 +75,7 @@ export default function AdminDashboard() {
                       <p className="font-medium text-sm text-gray-900">Apartamento T3 Miramar</p>
                       <p className="text-xs text-gray-500">Luanda, Angola</p>
                     </div>
-                    <div className="text-sm font-bold text-[#d48c5e]">
+                    <div className="text-sm font-bold text-[#FFD700]">
                       KZ 125.000.000
                     </div>
                   </div>

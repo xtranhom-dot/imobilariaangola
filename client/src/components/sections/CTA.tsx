@@ -22,7 +22,7 @@ export function CTA() {
               Nossa equipe altamente qualificada está pronta para ajudar você.
             </p>
 
-            <Button className="bg-[#d48c5e] hover:bg-[#c07b50] text-white px-8 py-6 uppercase tracking-widest font-bold text-sm shadow-lg hover:shadow-xl transition-all w-full md:w-auto">
+            <Button className="bg-[#FFD700] hover:bg-[#c07b50] text-white px-8 py-6 uppercase tracking-widest font-bold text-sm shadow-lg hover:shadow-xl transition-all w-full md:w-auto">
               Fale com um Especialista
             </Button>
           </div>

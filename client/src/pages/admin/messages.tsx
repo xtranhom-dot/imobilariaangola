@@ -67,7 +67,7 @@ export default function AdminMessages() {
                         <div className="flex items-center gap-2">
                           <h3 className="font-semibold text-lg text-gray-900">{message.name}</h3>
                           {!message.read && (
-                            <span className="bg-[#FFD700]/10 text-[#d48c5e] text-xs font-bold px-2 py-0.5 rounded-full">
+                            <span className="bg-[#FFD700]/10 text-[#FFD700] text-xs font-bold px-2 py-0.5 rounded-full">
                               Novo
                             </span>
                           )}

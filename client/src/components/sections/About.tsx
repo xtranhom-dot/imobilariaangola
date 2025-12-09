@@ -29,7 +29,7 @@ export function About() {
               </p>
             </div>
 
-            <div className="pt-4 border-l-4 border-[#d48c5e] pl-6">
+            <div className="pt-4 border-l-4 border-[#FFD700] pl-6">
               <p className="font-serif text-2xl font-medium text-white">
                 Junte-se a nós e descubra por que a Angola Imobiliária é uma referência inovadora no mercado imobiliário.
               </p>
@@ -37,7 +37,7 @@ export function About() {
           </div>
 
           <div className="relative">
-            <div className="absolute inset-0 bg-[#d48c5e] rounded-lg transform translate-x-4 translate-y-4 -z-10" />
+            <div className="absolute inset-0 bg-[#FFD700] rounded-lg transform translate-x-4 translate-y-4 -z-10" />
             <img 
               src={teamImage} 
               alt="Equipe Angola Imobiliária" 

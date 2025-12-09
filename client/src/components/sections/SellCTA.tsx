@@ -31,7 +31,7 @@ export function SellCTA() {
                    </p>
                 </div>
                 
-                <Button className="bg-[#d48c5e] hover:bg-[#c07b50] text-white px-8 py-6 uppercase tracking-widest font-bold text-sm shadow-lg hover:shadow-xl transition-all w-full">
+                <Button className="bg-[#FFD700] hover:bg-[#c07b50] text-white px-8 py-6 uppercase tracking-widest font-bold text-sm shadow-lg hover:shadow-xl transition-all w-full">
                   Quero Vender o Meu Imóvel
                 </Button>
              </div>

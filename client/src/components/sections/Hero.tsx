@@ -95,7 +95,7 @@ export function Hero() {
                 <button className="text-xs text-gray-400 hover:text-red-500 uppercase font-medium underline decoration-dotted underline-offset-4">
                   Remover
                 </button>
-                <Button className="flex-1 bg-[#d48c5e] hover:bg-[#c07b50] text-white font-bold uppercase tracking-widest text-xs h-10 shadow-md hover:shadow-lg transition-all">
+                <Button className="flex-1 bg-[#FFD700] hover:bg-[#c07b50] text-white font-bold uppercase tracking-widest text-xs h-10 shadow-md hover:shadow-lg transition-all">
                   <ListFilter className="w-4 h-4 mr-2" />
                   Mais Filtros
                 </Button>

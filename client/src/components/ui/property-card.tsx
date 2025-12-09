@@ -35,7 +35,7 @@ export function PropertyCard({ property }: { property: PropertyProps }) {
       </div>
 
       <CardHeader className="p-6 pb-2">
-        <div className="flex items-center gap-2 text-[#d48c5e] mb-2">
+        <div className="flex items-center gap-2 text-[#FFD700] mb-2">
           <MapPin className="w-4 h-4" />
           <span className="text-xs font-medium uppercase tracking-wide">{property.location}</span>
         </div>
@@ -47,15 +47,15 @@ export function PropertyCard({ property }: { property: PropertyProps }) {
       <CardContent className="p-6 pt-2 pb-4">
         <div className="flex items-center gap-4 text-sm text-gray-500 font-medium">
           <div className="flex items-center gap-1">
-            <span className="text-[#d48c5e] font-bold">{property.area}</span> m²
+            <span className="text-[#FFD700] font-bold">{property.area}</span> m²
           </div>
           <div className="w-px h-3 bg-gray-300" />
           <div className="flex items-center gap-1">
-            <span className="text-[#d48c5e] font-bold">{property.bedrooms}</span> Quartos
+            <span className="text-[#FFD700] font-bold">{property.bedrooms}</span> Quartos
           </div>
           <div className="w-px h-3 bg-gray-300" />
           <div className="flex items-center gap-1">
-            <span className="text-[#d48c5e] font-bold">{property.bathrooms}</span> Banheiros
+            <span className="text-[#FFD700] font-bold">{property.bathrooms}</span> Banheiros
           </div>
         </div>
       </CardContent>
@@ -68,7 +68,7 @@ export function PropertyCard({ property }: { property: PropertyProps }) {
           </span>
         </div>
         <Link href={`/property/${property.id}`}>
-          <a className="text-xs font-bold uppercase tracking-widest text-black hover:text-[#d48c5e] border-b-2 border-[#FFD700] hover:border-[#d48c5e] transition-colors pb-0.5">
+          <a className="text-xs font-bold uppercase tracking-widest text-black hover:text-[#FFD700] border-b-2 border-[#FFD700] hover:border-[#FFD700] transition-colors pb-0.5">
             Ver Detalhes
           </a>
         </Link>

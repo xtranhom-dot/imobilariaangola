@@ -124,7 +124,7 @@ export default function PropertyDetails() {
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <Badge className="bg-[#d48c5e] hover:bg-[#c07b50] text-white rounded-sm px-3 py-1 text-xs uppercase tracking-widest">Venda</Badge>
+                            <Badge className="bg-[#FFD700] hover:bg-[#c07b50] text-white rounded-sm px-3 py-1 text-xs uppercase tracking-widest">Venda</Badge>
                             <span className="text-gray-500 text-sm flex items-center gap-1"><MapPin className="w-4 h-4" /> {property.location}</span>
                         </div>
                         <h1 className="font-serif text-3xl md:text-4xl text-[hsl(350,85%,15%)] font-medium leading-tight">
@@ -136,7 +136,7 @@ export default function PropertyDetails() {
                             {new Intl.NumberFormat('pt-AO', { style: 'currency', currency: 'AOA' }).format(property.price)}
                         </span>
                         <div className="flex gap-2">
-                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-gray-200 text-gray-500 hover:text-[#d48c5e] hover:border-[#d48c5e]">
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-gray-200 text-gray-500 hover:text-[#FFD700] hover:border-[#FFD700]">
                                 <Share2 className="w-4 h-4" />
                             </Button>
                             <Button variant="outline" size="icon" className="rounded-full w-10 h-10 border-gray-200 text-gray-500 hover:text-red-500 hover:border-red-500">
@@ -148,22 +148,22 @@ export default function PropertyDetails() {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 bg-white rounded-lg border border-gray-100 shadow-sm p-6">
                     <div className="flex flex-col items-center justify-center text-center gap-1 border-r border-gray-100 last:border-0">
-                        <Square className="w-6 h-6 text-[#d48c5e]" />
+                        <Square className="w-6 h-6 text-[#FFD700]" />
                         <span className="font-bold text-[hsl(350,85%,15%)] text-lg">{property.stats.area}</span>
                         <span className="text-xs text-gray-400 uppercase tracking-widest">Área (m²)</span>
                     </div>
                     <div className="flex flex-col items-center justify-center text-center gap-1 border-r border-gray-100 last:border-0">
-                        <BedDouble className="w-6 h-6 text-[#d48c5e]" />
+                        <BedDouble className="w-6 h-6 text-[#FFD700]" />
                         <span className="font-bold text-[hsl(350,85%,15%)] text-lg">{property.stats.bedrooms}</span>
                         <span className="text-xs text-gray-400 uppercase tracking-widest">Quartos</span>
                     </div>
                     <div className="flex flex-col items-center justify-center text-center gap-1 border-r border-gray-100 last:border-0">
-                        <Bath className="w-6 h-6 text-[#d48c5e]" />
+                        <Bath className="w-6 h-6 text-[#FFD700]" />
                         <span className="font-bold text-[hsl(350,85%,15%)] text-lg">{property.stats.bathrooms}</span>
                         <span className="text-xs text-gray-400 uppercase tracking-widest">Banheiros</span>
                     </div>
                     <div className="flex flex-col items-center justify-center text-center gap-1">
-                        <Calendar className="w-6 h-6 text-[#d48c5e]" />
+                        <Calendar className="w-6 h-6 text-[#FFD700]" />
                         <span className="font-bold text-[hsl(350,85%,15%)] text-lg">{property.stats.builtYear}</span>
                         <span className="text-xs text-gray-400 uppercase tracking-widest">Ano</span>
                     </div>
@@ -183,8 +183,8 @@ export default function PropertyDetails() {
                 <h3 className="font-serif text-2xl text-[hsl(350,85%,15%)] font-medium">Características</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {property.features.map((feature, index) => (
-                        <div key={index} className="flex items-center gap-3 p-3 bg-white rounded-md border border-gray-100 hover:border-[#d48c5e]/30 transition-colors">
-                            <CheckCircle2 className="w-5 h-5 text-[#d48c5e]" />
+                        <div key={index} className="flex items-center gap-3 p-3 bg-white rounded-md border border-gray-100 hover:border-[#FFD700]/30 transition-colors">
+                            <CheckCircle2 className="w-5 h-5 text-[#FFD700]" />
                             <span className="text-gray-600 text-sm font-medium">{feature}</span>
                         </div>
                     ))}
@@ -201,7 +201,7 @@ export default function PropertyDetails() {
                     </h3>
                     
                     <div className="flex items-center gap-4 mb-6">
-                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#d48c5e]">
+                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#FFD700]">
                             <img src="/attached_assets/generated_images/professional_real_estate_team_of_three_people.png" alt="Agent" className="w-full h-full object-cover" />
                         </div>
                         <div>

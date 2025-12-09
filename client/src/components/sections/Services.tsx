@@ -21,7 +21,7 @@ export function Services() {
                <img src="/attached_assets/generated_images/luxury_living_room_interior.png" alt="Estudo de Mercado" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
             </div>
             <div className="space-y-3">
-               <h3 className="font-serif text-2xl text-black font-bold border-b-2 border-[#d48c5e] inline-block pb-1">Estudo de Mercado</h3>
+               <h3 className="font-serif text-2xl text-black font-bold border-b-2 border-[#FFD700] inline-block pb-1">Estudo de Mercado</h3>
                <p className="text-gray-600 text-sm leading-relaxed">
                   Realização de um Estudo de Mercado do imóvel para criar as melhores estratégias de venda de acordo com o seu objetivo.
                </p>
@@ -34,7 +34,7 @@ export function Services() {
                <img src="/attached_assets/generated_images/luxury_villa_exterior_at_dusk.png" alt="Fotos e Vídeos" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
             </div>
             <div className="space-y-3">
-               <h3 className="font-serif text-2xl text-black font-bold border-b-2 border-[#d48c5e] inline-block pb-1">Produção de Fotos e Vídeos</h3>
+               <h3 className="font-serif text-2xl text-black font-bold border-b-2 border-[#FFD700] inline-block pb-1">Produção de Fotos e Vídeos</h3>
                <p className="text-gray-600 text-sm leading-relaxed">
                   Ferramentas tecnológicas de Produção de Fotos e Vídeos em alta qualidade que geram impacto e despertam interesse do comprador.
                </p>
