@@ -4,6 +4,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import logo from "@assets/Design_sem_nome-removebg-preview_1_1765217810301.png";
 
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    height="1em" 
+    width="1em" 
+    className={className}
+  >
+    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.65-1.58-1.02v10.95c0 4.61-5.15 7.42-9.07 4.41-4.09-3.08-3.02-9.92 2.15-10.56V17c-2.45.15-4.14 2.54-3.23 4.97.72 1.94 3.22 2.79 5.06 1.68 1.34-.8 1.87-2.39 1.83-3.92V6.07c-1.01.44-2.12.52-3.2.32V2.32c.57.01 1.14.01 1.71.01.21-.01.42-.01.63-.01V.02z" />
+  </svg>
+);
+
 export function Footer() {
   return (
     <footer className="bg-black text-white pt-10 border-t border-white/10">
@@ -17,6 +29,7 @@ export function Footer() {
           <div className="flex items-center gap-4">
             <a href="https://www.facebook.com/angolaimobiliaria1" target="_blank" rel="noopener noreferrer" className="bg-[#1877F2] text-white p-3 rounded-full hover:scale-110 transition-transform"><Facebook className="w-5 h-5" /></a>
             <a href="https://www.instagram.com/angola.imobiliario?igsh=ODl0NWd5OW15ZHRi" target="_blank" rel="noopener noreferrer" className="bg-[#E4405F] text-white p-3 rounded-full hover:scale-110 transition-transform"><Instagram className="w-5 h-5" /></a>
+            <a href="https://www.tiktok.com/@vendaearrendamento?_r=1&_d=f0djikl58ji5c5&sec_uid=MS4wLjABAAAAyVfcXqPhyYhnTl6u1-UtiQ19NA0b44Gt110ZvX3Bwb5hFOHiiSV4K4t8tdL6rSkY&share_author_id=7158411886077281282&sharer_language=pt&source=h5_m&u_code=e4elja6gd2g17d&timestamp=1765366670&user_id=7158411886077281282&sec_user_id=MS4wLjABAAAAyVfcXqPhyYhnTl6u1-UtiQ19NA0b44Gt110ZvX3Bwb5hFOHiiSV4K4t8tdL6rSkY&item_author_type=1&utm_source=whatsapp&utm_campaign=client_share&utm_medium=android&share_iid=7580383302760515384&share_link_id=ff960e5c-1908-4602-8272-d652a6591e2d&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb7360&social_share_type=5&enable_checksum=1" target="_blank" rel="noopener noreferrer" className="bg-black border border-white/20 text-white p-3 rounded-full hover:scale-110 transition-transform"><TikTokIcon className="w-5 h-5" /></a>
             <a href="https://youtube.com/@angolaimobiliario?si=6QnshaAZZRlMGz7G" target="_blank" rel="noopener noreferrer" className="bg-[#FF0000] text-white p-3 rounded-full hover:scale-110 transition-transform"><Youtube className="w-5 h-5" /></a>
           </div>
         </div>
@@ -90,6 +103,7 @@ export function Footer() {
               <div className="flex gap-4">
                  <a href="https://www.facebook.com/angolaimobiliaria1" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700]"><Facebook className="w-4 h-4" /></a>
                  <a href="https://www.instagram.com/angola.imobiliario?igsh=ODl0NWd5OW15ZHRi" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700]"><Instagram className="w-4 h-4" /></a>
+                 <a href="https://www.tiktok.com/@vendaearrendamento?_r=1&_d=f0djikl58ji5c5&sec_uid=MS4wLjABAAAAyVfcXqPhyYhnTl6u1-UtiQ19NA0b44Gt110ZvX3Bwb5hFOHiiSV4K4t8tdL6rSkY&share_author_id=7158411886077281282&sharer_language=pt&source=h5_m&u_code=e4elja6gd2g17d&timestamp=1765366670&user_id=7158411886077281282&sec_user_id=MS4wLjABAAAAyVfcXqPhyYhnTl6u1-UtiQ19NA0b44Gt110ZvX3Bwb5hFOHiiSV4K4t8tdL6rSkY&item_author_type=1&utm_source=whatsapp&utm_campaign=client_share&utm_medium=android&share_iid=7580383302760515384&share_link_id=ff960e5c-1908-4602-8272-d652a6591e2d&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb7360&social_share_type=5&enable_checksum=1" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700]"><TikTokIcon className="w-4 h-4" /></a>
                  <a href="https://youtube.com/@angolaimobiliario?si=6QnshaAZZRlMGz7G" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700]"><Youtube className="w-4 h-4" /></a>
               </div>
             </div>
