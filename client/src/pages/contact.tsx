@@ -3,21 +3,25 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Send, Home, Key, HelpCircle } from "lucide-react";
 import contactHero from "@assets/generated_images/luxury_real_estate_office_reception.png";
+import { cn } from "@/lib/utils";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    email: "",
-    subject: "",
-    message: ""
+    subject: ""
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const subjects = [
+    { id: "aluguel", label: "Aluguel", icon: Key },
+    { id: "venda", label: "Venda", icon: Home },
+    { id: "outro", label: "Outro", icon: HelpCircle },
+  ];
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -25,12 +29,26 @@ export default function Contact() {
     }));
   };
 
+  const handleSubjectSelect = (subjectId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      subject: subjectId
+    }));
+  };
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    const { name, phone, email, subject, message } = formData;
+    const { name, phone, subject } = formData;
     
+    if (!subject) {
+      alert("Por favor, selecione um assunto.");
+      return;
+    }
+
+    const subjectLabel = subjects.find(s => s.id === subject)?.label || subject;
+
     // Format message for WhatsApp
-    const text = `*Nova Mensagem do Site*%0A%0A*Nome:* ${name}%0A*Telefone:* ${phone}%0A*Email:* ${email}%0A*Assunto:* ${subject}%0A*Mensagem:* ${message}`;
+    const text = `*Nova Mensagem do Site*%0A%0A*Nome:* ${name}%0A*Telefone:* ${phone}%0A*Assunto:* ${subjectLabel}`;
     
     // Open WhatsApp
     window.open(`https://wa.me/244953430432?text=${text}`, '_blank');
@@ -139,14 +157,14 @@ export default function Contact() {
                 <h2 className="font-serif text-3xl text-black mb-2">Envie uma Mensagem</h2>
                 <p className="text-gray-500 mb-8">Preencha o formulário abaixo e entraremos em contato em breve.</p>
                 
-                <form className="space-y-6" onSubmit={handleSendMessage}>
-                  <div className="grid md:grid-cols-2 gap-6">
+                <form className="space-y-8" onSubmit={handleSendMessage}>
+                  <div className="space-y-6">
                     <div className="space-y-2">
                       <Label htmlFor="name">Nome Completo</Label>
                       <Input 
                         id="name" 
                         placeholder="Seu nome" 
-                        className="bg-white border-gray-200 focus:border-[#FFD700]" 
+                        className="bg-white border-gray-200 focus:border-[#FFD700] h-12" 
                         value={formData.name}
                         onChange={handleInputChange}
                         required
@@ -157,7 +175,7 @@ export default function Contact() {
                       <Input 
                         id="phone" 
                         placeholder="+244 9XX XXX XXX" 
-                        className="bg-white border-gray-200 focus:border-[#FFD700]" 
+                        className="bg-white border-gray-200 focus:border-[#FFD700] h-12" 
                         value={formData.phone}
                         onChange={handleInputChange}
                         required
@@ -165,46 +183,33 @@ export default function Contact() {
                     </div>
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input 
-                      id="email" 
-                      type="email" 
-                      placeholder="seu@email.com" 
-                      className="bg-white border-gray-200 focus:border-[#FFD700]" 
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                    />
+                  <div className="space-y-3">
+                    <Label>Assunto</Label>
+                    <div className="grid grid-cols-3 gap-4">
+                      {subjects.map((subject) => (
+                        <div 
+                          key={subject.id}
+                          onClick={() => handleSubjectSelect(subject.id)}
+                          className={cn(
+                            "cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center justify-center gap-2 transition-all hover:border-[#FFD700]/50 hover:bg-[#FFD700]/5",
+                            formData.subject === subject.id 
+                              ? "border-[#FFD700] bg-[#FFD700]/10 text-black" 
+                              : "border-gray-100 bg-white text-gray-500"
+                          )}
+                        >
+                          <subject.icon className={cn(
+                            "w-6 h-6",
+                            formData.subject === subject.id ? "text-[#FFD700]" : "text-gray-400"
+                          )} />
+                          <span className="font-medium text-sm">{subject.label}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">Assunto</Label>
-                    <Input 
-                      id="subject" 
-                      placeholder="Interesse em imóvel, Parceria, etc." 
-                      className="bg-white border-gray-200 focus:border-[#FFD700]" 
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Mensagem</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Como podemos ajudar?" 
-                      className="min-h-[150px] bg-white border-gray-200 focus:border-[#FFD700] resize-none" 
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-
-                  <Button type="submit" className="w-full bg-black hover:bg-black/90 text-white font-medium py-6">
-                    <Send className="mr-2 h-4 w-4" />
-                    Enviar Mensagem via WhatsApp
+                  <Button type="submit" className="w-full bg-black hover:bg-black/90 text-white font-medium py-6 text-lg rounded-xl shadow-lg shadow-black/10">
+                    <Send className="mr-2 h-5 w-5" />
+                    Enviar via WhatsApp
                   </Button>
                 </form>
               </div>
