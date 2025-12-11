@@ -64,8 +64,8 @@ export function Header() {
           <a href="/#home" onClick={(e) => handleScrollToSection(e, "home")} className="hover:text-white transition-colors cursor-pointer">Home</a>
           <a href="/#about" onClick={(e) => handleScrollToSection(e, "about")} className="hover:text-white transition-colors cursor-pointer">Quem Somos</a>
           <a href="/#services" onClick={(e) => handleScrollToSection(e, "services")} className="hover:text-white transition-colors cursor-pointer">Serviços</a>
-          <Link href="/properties"><a className="hover:text-white transition-colors cursor-pointer">Imóveis</a></Link>
-          <Link href="/contact"><a className="hover:text-white transition-colors">Contato</a></Link>
+          <Link href="/properties" className="hover:text-white transition-colors cursor-pointer">Imóveis</Link>
+          <Link href="/contact" className="hover:text-white transition-colors">Contato</Link>
         </nav>
 
         {/* Right Side - Top Right */}
@@ -102,8 +102,8 @@ export function Header() {
           <a href="/#home" onClick={(e) => handleScrollToSection(e, "home")} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Home</a>
           <a href="/#about" onClick={(e) => handleScrollToSection(e, "about")} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Quem Somos</a>
           <a href="/#services" onClick={(e) => handleScrollToSection(e, "services")} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Serviços</a>
-          <Link href="/properties"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Imóveis</a></Link>
-          <Link href="/contact"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Contato</a></Link>
+          <Link href="/properties" className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Imóveis</Link>
+          <Link href="/contact" className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Contato</Link>
         </div>
       )}
     </header>

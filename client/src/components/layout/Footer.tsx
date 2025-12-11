@@ -74,11 +74,11 @@ export function Footer() {
           {/* Links */}
           <div className="space-y-6">
             <div className="grid grid-cols-1 gap-3 font-sans text-sm font-medium uppercase tracking-widest">
-              <Link href="/"><a className="hover:text-[#FFD700] transition-colors">Home</a></Link>
-              <Link href="/about"><a className="hover:text-[#FFD700] transition-colors">Quem Somos</a></Link>
-              <Link href="/services"><a className="hover:text-[#FFD700] transition-colors">Serviços</a></Link>
-              <Link href="/properties"><a className="hover:text-[#FFD700] transition-colors">Imóveis</a></Link>
-              <Link href="/contact"><a className="hover:text-[#FFD700] transition-colors">Contato</a></Link>
+              <Link href="/" className="hover:text-[#FFD700] transition-colors">Home</Link>
+              <Link href="/about" className="hover:text-[#FFD700] transition-colors">Quem Somos</Link>
+              <Link href="/services" className="hover:text-[#FFD700] transition-colors">Serviços</Link>
+              <Link href="/properties" className="hover:text-[#FFD700] transition-colors">Imóveis</Link>
+              <Link href="/contact" className="hover:text-[#FFD700] transition-colors">Contato</Link>
             </div>
           </div>
 
@@ -112,9 +112,7 @@ export function Footer() {
 
         <div className="border-t border-white/10 mt-8 md:mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-white/40 font-sans gap-4 text-center md:text-left">
           <p>© 2026 - Angola Imobiliária - Todos os direitos reservados. Desenvolvido por kysdigital.corp</p>
-          <Link href="/privacy-policy">
-            <a className="hover:text-white">Política de Privacidade</a>
-          </Link>
+          <Link href="/privacy-policy" className="hover:text-white">Política de Privacidade</Link>
         </div>
       </div>
     </footer>

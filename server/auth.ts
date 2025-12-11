@@ -1,23 +1,21 @@
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import { Express } from "express";
-import session from "express-session";
+import { Express, Request, Response, NextFunction } from "express";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
 import { User as SelectUser } from "@shared/schema";
 import jwt from "jsonwebtoken";
-import createMemoryStore from "memorystore";
 
 declare global {
   namespace Express {
     interface User extends SelectUser {}
+    interface Request {
+      user?: SelectUser;
+    }
   }
 }
 
 const scryptAsync = promisify(scrypt);
 const JWT_SECRET = process.env.SESSION_SECRET || "fallback-secret-key";
-const MemoryStore = createMemoryStore(session);
 
 export async function hashPassword(password: string) {
   const salt = randomBytes(16).toString("hex");
@@ -55,109 +53,79 @@ export function setupAuth(app: Express) {
     console.warn("SESSION_SECRET not set - using fallback (not secure for production)");
   }
 
-  const sessionSettings: session.SessionOptions = {
-    secret: process.env.SESSION_SECRET || "fallback-secret-key",
-    resave: false,
-    saveUninitialized: false,
-    store: new MemoryStore({
-      checkPeriod: 86400000
-    }),
-    cookie: {
-      secure: process.env.NODE_ENV === "production",
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    },
-  };
-
-  app.set("trust proxy", 1);
-  app.use(session(sessionSettings));
-  app.use(passport.initialize());
-  app.use(passport.session());
-
-  passport.use(
-    new LocalStrategy(
-      { usernameField: "email", passwordField: "password" },
-      async (email, password, done) => {
-        const user = await storage.getUserByEmail(email);
-        if (!user || !(await comparePasswords(password, user.password))) {
-          return done(null, false, { message: "Email ou senha incorretos" });
-        }
-        return done(null, user);
+  app.post("/api/login", async (req: Request, res: Response) => {
+    try {
+      const { email, password } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ error: "Email e senha são obrigatórios" });
       }
-    )
-  );
 
-  passport.serializeUser((user, done) => done(null, user.id));
-  passport.deserializeUser(async (id: string, done) => {
-    const user = await storage.getUser(id);
-    done(null, user);
-  });
-
-  app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", (err: any, user: SelectUser | false, info: any) => {
-      if (err) return next(err);
+      const user = await storage.getUserByEmail(email);
       if (!user) {
-        return res.status(401).json({ error: info?.message || "Credenciais inválidas" });
+        return res.status(401).json({ error: "Email ou senha incorretos" });
       }
-      
+
+      const isValid = await comparePasswords(password, user.password);
+      if (!isValid) {
+        return res.status(401).json({ error: "Email ou senha incorretos" });
+      }
+
       const token = generateToken(user);
+      const { password: _, ...userWithoutPassword } = user;
       
-      req.login(user, (err) => {
-        if (err) return next(err);
-        const { password, ...userWithoutPassword } = user;
-        res.status(200).json({ ...userWithoutPassword, token });
-      });
-    })(req, res, next);
+      res.status(200).json({ ...userWithoutPassword, token });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ error: "Erro interno do servidor" });
+    }
   });
 
-  app.post("/api/logout", (req, res, next) => {
-    req.logout((err) => {
-      if (err) return next(err);
-      res.sendStatus(200);
-    });
+  app.post("/api/logout", (req: Request, res: Response) => {
+    res.sendStatus(200);
   });
 
-  app.get("/api/user", async (req, res) => {
+  app.get("/api/user", async (req: Request, res: Response) => {
     const authHeader = req.headers.authorization;
-    if (authHeader?.startsWith("Bearer ")) {
-      const token = authHeader.substring(7);
-      const decoded = verifyToken(token);
-      if (decoded) {
-        const user = await storage.getUser(decoded.id);
-        if (user) {
-          const { password, ...userWithoutPassword } = user;
-          return res.json(userWithoutPassword);
-        }
-      }
+    if (!authHeader?.startsWith("Bearer ")) {
+      return res.sendStatus(401);
     }
     
-    if (req.isAuthenticated()) {
-      const { password, ...userWithoutPassword } = req.user as SelectUser;
-      return res.json(userWithoutPassword);
+    const token = authHeader.substring(7);
+    const decoded = verifyToken(token);
+    
+    if (!decoded) {
+      return res.sendStatus(401);
     }
     
-    return res.sendStatus(401);
+    const user = await storage.getUser(decoded.id);
+    if (!user) {
+      return res.sendStatus(401);
+    }
+    
+    const { password, ...userWithoutPassword } = user;
+    res.json(userWithoutPassword);
   });
 }
 
-export async function requireAuth(req: any, res: any, next: any) {
+export async function requireAuth(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
-  if (authHeader?.startsWith("Bearer ")) {
-    const token = authHeader.substring(7);
-    const decoded = verifyToken(token);
-    if (decoded) {
-      const user = await storage.getUser(decoded.id);
-      if (user) {
-        req.user = user;
-        return next();
-      }
-    }
+  if (!authHeader?.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Não autorizado" });
   }
   
-  if (req.isAuthenticated()) {
-    return next();
+  const token = authHeader.substring(7);
+  const decoded = verifyToken(token);
+  
+  if (!decoded) {
+    return res.status(401).json({ error: "Token inválido ou expirado" });
   }
   
-  return res.status(401).json({ error: "Não autorizado" });
+  const user = await storage.getUser(decoded.id);
+  if (!user) {
+    return res.status(401).json({ error: "Usuário não encontrado" });
+  }
+  
+  req.user = user;
+  next();
 }
