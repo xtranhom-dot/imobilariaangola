@@ -5,7 +5,7 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 import { User as SelectUser } from "@shared/schema";
-import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
+import { getQueryFn, apiRequest, queryClient, setAuthToken, removeAuthToken } from "../lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
 type AuthContextType = {
@@ -20,6 +20,8 @@ type LoginData = {
   email: string;
   password: string;
 };
+
+type LoginResponse = SelectUser & { token?: string };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -39,7 +41,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const res = await apiRequest("POST", "/api/login", credentials);
       return await res.json();
     },
-    onSuccess: (user: SelectUser) => {
+    onSuccess: (response: LoginResponse) => {
+      if (response.token) {
+        setAuthToken(response.token);
+      }
+      const { token, ...user } = response;
       queryClient.setQueryData(["/api/user"], user);
     },
     onError: (error: Error) => {
@@ -56,9 +62,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await apiRequest("POST", "/api/logout");
     },
     onSuccess: () => {
+      removeAuthToken();
       queryClient.setQueryData(["/api/user"], null);
     },
     onError: (error: Error) => {
+      removeAuthToken();
+      queryClient.setQueryData(["/api/user"], null);
       toast({
         title: "Erro ao sair",
         description: error.message,

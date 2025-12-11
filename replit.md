@@ -25,9 +25,10 @@ The frontend follows a component-based architecture with:
 
 ### Backend Architecture
 - **Framework**: Express.js with TypeScript
-- **Database ORM**: Drizzle ORM with PostgreSQL
+- **Database**: Turso (SQLite/libSQL) with Drizzle ORM
 - **Authentication**: Passport.js with local strategy and session-based auth
-- **Session Storage**: PostgreSQL-backed sessions via connect-pg-simple
+- **Session Storage**: In-memory store (memorystore) - compatible with serverless
+- **Image Storage**: Cloudinary
 
 The server uses a storage abstraction pattern (`server/storage.ts`) for database operations, making it easier to swap implementations if needed.
 
@@ -42,6 +43,7 @@ RESTful API endpoints under `/api/`:
 - `/api/properties` - CRUD for property listings
 - `/api/messages` - Contact form submissions
 - `/api/user`, `/api/login`, `/api/logout` - Authentication
+- `/api/upload` - Image upload to Cloudinary
 
 Protected admin routes require authentication via `requireAuth` middleware.
 
@@ -53,17 +55,24 @@ Protected admin routes require authentication via `requireAuth` middleware.
 ## External Dependencies
 
 ### Database
-- **PostgreSQL**: Primary database (requires DATABASE_URL environment variable)
-- **Drizzle ORM**: Type-safe database queries and migrations
+- **Turso**: SQLite database hosted on edge (requires TURSO_DATABASE_URL and TURSO_AUTH_TOKEN)
+- **Drizzle ORM**: Type-safe database queries
+
+### Image Storage
+- **Cloudinary**: Cloud-based image storage and transformation
 
 ### Authentication & Sessions
 - **Passport.js**: Authentication middleware
-- **connect-pg-simple**: PostgreSQL session store
+- **memorystore**: In-memory session store (serverless compatible)
 - **express-session**: Session management
 
 ### Environment Variables Required
-- `DATABASE_URL`: PostgreSQL connection string
+- `TURSO_DATABASE_URL`: Turso database URL (libsql://...)
+- `TURSO_AUTH_TOKEN`: Turso authentication token
 - `SESSION_SECRET`: Secret key for session encryption
+- `CLOUDINARY_CLOUD_NAME`: Cloudinary cloud name
+- `CLOUDINARY_API_KEY`: Cloudinary API key
+- `CLOUDINARY_API_SECRET`: Cloudinary API secret
 
 ### Third-Party UI Libraries
 - **Radix UI**: Accessible UI primitives
@@ -73,4 +82,15 @@ Protected admin routes require authentication via `requireAuth` middleware.
 ### Development Tools
 - **Vite**: Development server and build tool
 - **tsx**: TypeScript execution for development
-- **drizzle-kit**: Database migration tooling
+
+## Deployment
+
+### Vercel Deployment
+The project is configured for Vercel deployment with `vercel.json`:
+- Build command: `npm run build`
+- Output directory: `dist`
+- API rewrites configured for backend routes
+
+### Admin Access
+- Email: imobiliarioangola@admin.com
+- Password: Imobiliario909192

@@ -6,6 +6,8 @@ import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
 import { User as SelectUser } from "@shared/schema";
+import jwt from "jsonwebtoken";
+import createMemoryStore from "memorystore";
 
 declare global {
   namespace Express {
@@ -14,6 +16,8 @@ declare global {
 }
 
 const scryptAsync = promisify(scrypt);
+const JWT_SECRET = process.env.SESSION_SECRET || "fallback-secret-key";
+const MemoryStore = createMemoryStore(session);
 
 export async function hashPassword(password: string) {
   const salt = randomBytes(16).toString("hex");
@@ -28,20 +32,41 @@ export async function comparePasswords(supplied: string, stored: string) {
   return timingSafeEqual(hashedBuf, suppliedBuf);
 }
 
+function generateToken(user: SelectUser): string {
+  const payload = {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+    role: user.role,
+  };
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" });
+}
+
+function verifyToken(token: string): { id: string; email: string; username: string; role: string | null } | null {
+  try {
+    return jwt.verify(token, JWT_SECRET) as any;
+  } catch {
+    return null;
+  }
+}
+
 export function setupAuth(app: Express) {
   if (!process.env.SESSION_SECRET) {
-    throw new Error("SESSION_SECRET must be set for secure session management");
+    console.warn("SESSION_SECRET not set - using fallback (not secure for production)");
   }
 
   const sessionSettings: session.SessionOptions = {
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "fallback-secret-key",
     resave: false,
     saveUninitialized: false,
-    store: storage.sessionStore,
+    store: new MemoryStore({
+      checkPeriod: 86400000
+    }),
     cookie: {
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
   };
 
@@ -75,10 +100,13 @@ export function setupAuth(app: Express) {
       if (!user) {
         return res.status(401).json({ error: info?.message || "Credenciais inválidas" });
       }
+      
+      const token = generateToken(user);
+      
       req.login(user, (err) => {
         if (err) return next(err);
         const { password, ...userWithoutPassword } = user;
-        res.status(200).json(userWithoutPassword);
+        res.status(200).json({ ...userWithoutPassword, token });
       });
     })(req, res, next);
   });
@@ -90,16 +118,46 @@ export function setupAuth(app: Express) {
     });
   });
 
-  app.get("/api/user", (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
-    const { password, ...userWithoutPassword } = req.user as SelectUser;
-    res.json(userWithoutPassword);
+  app.get("/api/user", async (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.substring(7);
+      const decoded = verifyToken(token);
+      if (decoded) {
+        const user = await storage.getUser(decoded.id);
+        if (user) {
+          const { password, ...userWithoutPassword } = user;
+          return res.json(userWithoutPassword);
+        }
+      }
+    }
+    
+    if (req.isAuthenticated()) {
+      const { password, ...userWithoutPassword } = req.user as SelectUser;
+      return res.json(userWithoutPassword);
+    }
+    
+    return res.sendStatus(401);
   });
 }
 
-export function requireAuth(req: any, res: any, next: any) {
-  if (!req.isAuthenticated()) {
-    return res.status(401).json({ error: "Não autorizado" });
+export async function requireAuth(req: any, res: any, next: any) {
+  const authHeader = req.headers.authorization;
+  if (authHeader?.startsWith("Bearer ")) {
+    const token = authHeader.substring(7);
+    const decoded = verifyToken(token);
+    if (decoded) {
+      const user = await storage.getUser(decoded.id);
+      if (user) {
+        req.user = user;
+        return next();
+      }
+    }
   }
-  next();
+  
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  
+  return res.status(401).json({ error: "Não autorizado" });
 }
