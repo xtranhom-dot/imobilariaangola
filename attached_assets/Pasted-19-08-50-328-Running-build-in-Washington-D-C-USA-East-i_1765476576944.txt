@@ -1,0 +1,69 @@
+19:08:50.328 Running build in Washington, D.C., USA (East) – iad1
+19:08:50.331 Build machine configuration: 2 cores, 8 GB
+19:08:50.349 Cloning github.com/xtranhom-dot/imobilariaangola (Branch: main, Commit: 90c9680)
+19:08:50.350 Skipping build cache, deployment was triggered without cache.
+19:08:51.459 Cloning completed: 1.109s
+19:08:51.859 Running "vercel build"
+19:08:52.281 Vercel CLI 49.1.2
+19:08:53.205 > Installing Builder: @vercel/node@3.0.0
+19:09:05.627 Running "install" command: `npm install`...
+19:09:08.068 npm warn deprecated q@1.5.1: You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+19:09:08.068 npm warn deprecated
+19:09:08.069 npm warn deprecated (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
+19:09:09.203 npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+19:09:09.238 npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+19:09:09.776 npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+19:09:15.602 
+19:09:15.603 added 487 packages, and audited 488 packages in 10s
+19:09:15.603 
+19:09:15.604 46 packages are looking for funding
+19:09:15.604   run `npm fund` for details
+19:09:15.630 
+19:09:15.630 6 vulnerabilities (2 low, 4 moderate)
+19:09:15.631 
+19:09:15.631 To address issues that do not require attention, run:
+19:09:15.631   npm audit fix
+19:09:15.631 
+19:09:15.631 To address all issues (including breaking changes), run:
+19:09:15.631   npm audit fix --force
+19:09:15.631 
+19:09:15.631 Run `npm audit` for details.
+19:09:15.880 
+19:09:15.880 > rest-express@1.0.0 build
+19:09:15.881 > tsx script/build.ts
+19:09:15.881 
+19:09:16.939 building client...
+19:09:17.215 [36mvite v7.1.12 [32mbuilding for production...[36m[39m
+19:09:17.514 transforming...
+19:09:17.768 
+19:09:17.769 /assets/luanda-hero.jpg referenced in /assets/luanda-hero.jpg didn't resolve at build time, it will remain unchanged to be resolved at runtime
+19:09:21.489 [32m✓[39m 2023 modules transformed.
+19:09:21.996 rendering chunks...
+19:09:22.004 [meta-images] no Replit deployment domain found, skipping meta tag updates
+19:09:22.021 computing gzip size...
+19:09:22.047 [2m../dist/public/[22m[32mindex.html                                                               [39m[1m[2m    1.61 kB[22m[1m[22m[2m │ gzip:   0.68 kB[22m
+19:09:22.048 [2m../dist/public/[22m[2massets/[22m[32mDesign_sem_nome-removebg-preview_1_1765217810301-CUHNSRhN.png     [39m[1m[2m  194.49 kB[22m[1m[22m
+19:09:22.048 [2m../dist/public/[22m[2massets/[22m[32mluanda-hero-DWQYGLuS.jpg                                          [39m[1m[2m  209.19 kB[22m[1m[22m
+19:09:22.048 [2m../dist/public/[22m[2massets/[22m[32mreal_estate_rental_concept_with_keys-62643KKi.png                 [39m[1m[2m1,232.40 kB[22m[1m[22m
+19:09:22.049 [2m../dist/public/[22m[2massets/[22m[32mprofessional_real_estate_team_of_three_people-e68SIdZF.png        [39m[1m[2m1,308.27 kB[22m[1m[22m
+19:09:22.049 [2m../dist/public/[22m[2massets/[22m[32mluxury_real_estate_office_reception-CblYEyEC.png                  [39m[1m[2m1,407.51 kB[22m[1m[22m
+19:09:22.049 [2m../dist/public/[22m[2massets/[22m[32mmodern_luxury_apartment_building_exterior_at_sunset-b7wdfGeg.png  [39m[1m[2m1,443.49 kB[22m[1m[22m
+19:09:22.049 [2m../dist/public/[22m[2massets/[22m[32mreal_estate_appraisal_concept-CBUgH8N4.png                        [39m[1m[2m1,501.27 kB[22m[1m[22m
+19:09:22.049 [2m../dist/public/[22m[2massets/[22m[32marchitectural_floor_plans-DQfFOhvv.png                            [39m[1m[2m1,574.62 kB[22m[1m[22m
+19:09:22.049 [2m../dist/public/[22m[2massets/[22m[32mproperty_maintenance_concept-OrhJjIcl.png                         [39m[1m[2m1,609.23 kB[22m[1m[22m
+19:09:22.050 [2m../dist/public/[22m[2massets/[22m[32mreal_estate_sales_concept_with_luxury_home-CD8vmBKY.png           [39m[1m[2m1,970.61 kB[22m[1m[22m
+19:09:22.051 [2m../dist/public/[22m[2massets/[22m[35mindex-CVmG6j6j.css                                                [39m[1m[2m  120.23 kB[22m[1m[22m[2m │ gzip:  19.29 kB[22m
+19:09:22.051 [2m../dist/public/[22m[2massets/[22m[36mindex-CrFMtg7f.js                                                 [39m[1m[33m  688.89 kB[39m[22m[2m │ gzip: 205.94 kB[22m
+19:09:22.051 [32m✓ built in 4.57s[39m
+19:09:22.051 building server...
+19:09:22.051 [33m
+19:09:22.051 (!) Some chunks are larger than 500 kB after minification. Consider:
+19:09:22.051 - Using dynamic import() to code-split the application
+19:09:22.051 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+19:09:22.052 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+19:09:22.248 
+19:09:22.248   dist/index.cjs  1.1mb ⚠️
+19:09:22.249 
+19:09:22.249 ⚡ Done in 194ms
+19:09:22.351 Error: Found invalid Node.js Version: "24.x". Please set Node.js Version to 18.x in your Project Settings to use Node.js 18.
+19:09:22.351 Learn More: http://vercel.link/node-version
