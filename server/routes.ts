@@ -3,12 +3,15 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertPropertySchema, insertMessageSchema } from "@shared/schema";
 import { z } from "zod";
+import { setupAuth, requireAuth } from "./auth";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Properties Routes
+  setupAuth(app);
+
+  // Public Properties Routes
   app.get("/api/properties", async (req, res) => {
     try {
       const properties = await storage.getProperties();
@@ -43,7 +46,8 @@ export async function registerRoutes(
     }
   });
 
-  app.post("/api/properties", async (req, res) => {
+  // Protected Admin Routes - Properties
+  app.post("/api/properties", requireAuth, async (req, res) => {
     try {
       const validatedData = insertPropertySchema.parse(req.body);
       const property = await storage.createProperty(validatedData);
@@ -57,7 +61,7 @@ export async function registerRoutes(
     }
   });
 
-  app.patch("/api/properties/:id", async (req, res) => {
+  app.patch("/api/properties/:id", requireAuth, async (req, res) => {
     try {
       const property = await storage.updateProperty(req.params.id, req.body);
       res.json(property);
@@ -67,7 +71,7 @@ export async function registerRoutes(
     }
   });
 
-  app.delete("/api/properties/:id", async (req, res) => {
+  app.delete("/api/properties/:id", requireAuth, async (req, res) => {
     try {
       await storage.deleteProperty(req.params.id);
       res.status(204).send();
@@ -77,8 +81,8 @@ export async function registerRoutes(
     }
   });
 
-  // Messages Routes
-  app.get("/api/messages", async (req, res) => {
+  // Protected Admin Routes - Messages
+  app.get("/api/messages", requireAuth, async (req, res) => {
     try {
       const messages = await storage.getMessages();
       res.json(messages);
@@ -88,7 +92,7 @@ export async function registerRoutes(
     }
   });
 
-  app.get("/api/messages/:id", async (req, res) => {
+  app.get("/api/messages/:id", requireAuth, async (req, res) => {
     try {
       const message = await storage.getMessage(req.params.id);
       if (!message) {
@@ -101,6 +105,7 @@ export async function registerRoutes(
     }
   });
 
+  // Public route - Contact form submission
   app.post("/api/messages", async (req, res) => {
     try {
       const validatedData = insertMessageSchema.parse(req.body);
@@ -115,7 +120,7 @@ export async function registerRoutes(
     }
   });
 
-  app.patch("/api/messages/:id/read", async (req, res) => {
+  app.patch("/api/messages/:id/read", requireAuth, async (req, res) => {
     try {
       await storage.markMessageAsRead(req.params.id);
       res.status(204).send();
@@ -125,13 +130,33 @@ export async function registerRoutes(
     }
   });
 
-  app.delete("/api/messages/:id", async (req, res) => {
+  app.delete("/api/messages/:id", requireAuth, async (req, res) => {
     try {
       await storage.deleteMessage(req.params.id);
       res.status(204).send();
     } catch (error) {
       console.error("Error deleting message:", error);
       res.status(500).json({ error: "Failed to delete message" });
+    }
+  });
+
+  // Admin Stats Route
+  app.get("/api/admin/stats", requireAuth, async (req, res) => {
+    try {
+      const properties = await storage.getProperties();
+      const messages = await storage.getMessages();
+      const unreadMessages = messages.filter(m => !m.read).length;
+      
+      res.json({
+        totalProperties: properties.length,
+        totalMessages: messages.length,
+        unreadMessages,
+        propertiesForSale: properties.filter(p => p.purpose === "Venda").length,
+        propertiesForRent: properties.filter(p => p.purpose === "Aluguel").length,
+      });
+    } catch (error) {
+      console.error("Error fetching admin stats:", error);
+      res.status(500).json({ error: "Failed to fetch stats" });
     }
   });
 

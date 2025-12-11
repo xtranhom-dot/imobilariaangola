@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -6,20 +6,30 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Lock, Mail, Loader2 } from "lucide-react";
 import logo from "@assets/Design_sem_nome-removebg-preview_1_1765217810301.png";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
-  const [isLoading, setIsLoading] = useState(false);
+  const { user, loginMutation } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
+  useEffect(() => {
+    if (user) {
       setLocation("/admin/dashboard");
-    }, 1500);
+    }
+  }, [user, setLocation]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    loginMutation.mutate(
+      { email, password },
+      {
+        onSuccess: () => {
+          setLocation("/admin/dashboard");
+        },
+      }
+    );
   };
 
   return (
@@ -51,7 +61,10 @@ export default function AdminLogin() {
                   type="email" 
                   placeholder="admin@angolaimobiliaria.ao" 
                   className="pl-9 bg-gray-50"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required 
+                  data-testid="input-email"
                 />
               </div>
             </div>
@@ -64,7 +77,10 @@ export default function AdminLogin() {
                   type="password" 
                   placeholder="••••••••" 
                   className="pl-9 bg-gray-50"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required 
+                  data-testid="input-password"
                 />
               </div>
             </div>
@@ -72,9 +88,10 @@ export default function AdminLogin() {
             <Button 
               type="submit" 
               className="w-full bg-[#FFD700] hover:bg-[#e6c200] text-black font-bold h-11 transition-all"
-              disabled={isLoading}
+              disabled={loginMutation.isPending}
+              data-testid="button-login"
             >
-              {isLoading ? (
+              {loginMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   A entrar...
@@ -83,12 +100,6 @@ export default function AdminLogin() {
                 "Entrar no Sistema"
               )}
             </Button>
-
-            <div className="text-center text-sm">
-              <a href="#" className="text-gray-500 hover:text-[#FFD700] transition-colors">
-                Esqueceu a palavra-passe?
-              </a>
-            </div>
           </form>
         </CardContent>
       </Card>
