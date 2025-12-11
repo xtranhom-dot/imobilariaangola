@@ -5,12 +5,12 @@ import {
   type Message, type InsertMessage
 } from "@shared/schema";
 import { db } from "./db";
-import { pool } from "./db";
-import { eq, desc, and, like, or, sql } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import session from "express-session";
-import connectPg from "connect-pg-simple";
+import createMemoryStore from "memorystore";
+import { randomUUID } from "crypto";
 
-const PostgresSessionStore = connectPg(session);
+const MemoryStore = createMemoryStore(session);
 
 export interface IStorage {
   sessionStore: session.Store;
@@ -41,9 +41,8 @@ export class DatabaseStorage implements IStorage {
   sessionStore: session.Store;
 
   constructor() {
-    this.sessionStore = new PostgresSessionStore({ 
-      pool, 
-      createTableIfMissing: true 
+    this.sessionStore = new MemoryStore({
+      checkPeriod: 86400000
     });
   }
 
@@ -64,10 +63,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const [user] = await db
-      .insert(users)
-      .values(insertUser)
-      .returning();
+    const id = randomUUID();
+    await db.insert(users).values({ ...insertUser, id });
+    const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
   }
 
@@ -91,19 +89,33 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createProperty(insertProperty: InsertProperty): Promise<Property> {
-    const [property] = await db
-      .insert(properties)
-      .values(insertProperty)
-      .returning();
+    const id = randomUUID();
+    const images: string[] = Array.isArray(insertProperty.images) 
+      ? [...insertProperty.images] 
+      : [];
+    const propertyData = {
+      ...insertProperty,
+      id,
+      images,
+    };
+    await db.insert(properties).values(propertyData);
+    const [property] = await db.select().from(properties).where(eq(properties.id, id));
     return property;
   }
 
   async updateProperty(id: string, updateData: Partial<InsertProperty>): Promise<Property> {
-    const [property] = await db
+    const dataToUpdate: Record<string, unknown> = {
+      ...updateData,
+      updatedAt: new Date().toISOString(),
+    };
+    if (updateData.images !== undefined) {
+      dataToUpdate.images = updateData.images;
+    }
+    await db
       .update(properties)
-      .set({ ...updateData, updatedAt: new Date() })
-      .where(eq(properties.id, id))
-      .returning();
+      .set(dataToUpdate)
+      .where(eq(properties.id, id));
+    const [property] = await db.select().from(properties).where(eq(properties.id, id));
     return property;
   }
 
@@ -122,10 +134,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createMessage(insertMessage: InsertMessage): Promise<Message> {
-    const [message] = await db
-      .insert(messages)
-      .values(insertMessage)
-      .returning();
+    const id = randomUUID();
+    await db.insert(messages).values({ ...insertMessage, id });
+    const [message] = await db.select().from(messages).where(eq(messages.id, id));
     return message;
   }
 

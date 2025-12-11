@@ -5,33 +5,15 @@ import { insertPropertySchema, insertMessageSchema } from "@shared/schema";
 import { z } from "zod";
 import { setupAuth, requireAuth } from "./auth";
 import multer from "multer";
-import path from "path";
-import fs from "fs";
-
-const uploadDir = path.join(process.cwd(), "uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-const storage_multer = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const ext = path.extname(file.originalname);
-    cb(null, `property-${uniqueSuffix}${ext}`);
-  },
-});
+import { uploadToCloudinary, deleteFromCloudinary } from "./cloudinary";
 
 const upload = multer({
-  storage: storage_multer,
+  storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png|gif|webp/;
-    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = allowedTypes.test(file.mimetype);
-    if (extname && mimetype) {
+    if (mimetype) {
       cb(null, true);
     } else {
       cb(new Error("Apenas imagens são permitidas (jpeg, jpg, png, gif, webp)"));
@@ -205,14 +187,17 @@ export async function registerRoutes(
     }
   });
 
-  // Image Upload Route
-  app.post("/api/upload", requireAuth, upload.array("images", 10), (req, res) => {
+  // Image Upload Route - Cloudinary
+  app.post("/api/upload", requireAuth, upload.array("images", 10), async (req, res) => {
     try {
       const files = req.files as Express.Multer.File[];
       if (!files || files.length === 0) {
         return res.status(400).json({ error: "Nenhum arquivo enviado" });
       }
-      const urls = files.map((file) => `/uploads/${file.filename}`);
+      
+      const uploadPromises = files.map(file => uploadToCloudinary(file.buffer));
+      const urls = await Promise.all(uploadPromises);
+      
       res.json({ urls });
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -220,34 +205,21 @@ export async function registerRoutes(
     }
   });
 
-  // Delete uploaded image
+  // Delete uploaded image from Cloudinary
   app.delete("/api/upload", requireAuth, async (req, res) => {
     try {
       const { url } = req.body;
       if (!url) {
         return res.status(400).json({ error: "URL da imagem não fornecida" });
       }
-      const filename = path.basename(url);
-      if (!filename || filename.includes("..") || !filename.startsWith("property-")) {
-        return res.status(400).json({ error: "Nome de arquivo inválido" });
-      }
-      const filepath = path.join(uploadDir, filename);
-      const resolvedPath = path.resolve(filepath);
-      if (!resolvedPath.startsWith(path.resolve(uploadDir))) {
-        return res.status(400).json({ error: "Caminho inválido" });
-      }
-      if (fs.existsSync(resolvedPath)) {
-        fs.unlinkSync(resolvedPath);
-      }
+      
+      await deleteFromCloudinary(url);
       res.status(204).send();
     } catch (error) {
       console.error("Error deleting image:", error);
       res.status(500).json({ error: "Falha ao deletar imagem" });
     }
   });
-
-  // Serve uploaded files
-  app.use("/uploads", (await import("express")).default.static(uploadDir));
 
   return httpServer;
 }

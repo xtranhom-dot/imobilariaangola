@@ -1,6 +1,7 @@
 import { db } from "../server/db";
 import { users } from "../shared/schema";
-import { scrypt, randomBytes } from "crypto";
+import { eq } from "drizzle-orm";
+import { scrypt, randomBytes, randomUUID } from "crypto";
 import { promisify } from "util";
 
 const scryptAsync = promisify(scrypt);
@@ -15,27 +16,29 @@ async function createAdmin() {
   const email = "imobiliarioangola@admin.com";
   const password = "Imobiliario909192";
   const hashedPassword = await hashPassword(password);
+  const id = randomUUID();
 
   try {
-    const [admin] = await db
-      .insert(users)
-      .values({
-        username: "Admin Angola Imobiliária",
-        email: email,
-        password: hashedPassword,
-        role: "admin",
-      })
-      .returning();
-
-    console.log("Admin user created successfully!");
-    console.log("Email:", email);
-    console.log("ID:", admin.id);
-    process.exit(0);
-  } catch (error: any) {
-    if (error.code === "23505") {
+    // Check if admin already exists
+    const [existing] = await db.select().from(users).where(eq(users.email, email));
+    if (existing) {
       console.log("Admin user already exists with this email.");
       process.exit(0);
     }
+
+    await db.insert(users).values({
+      id,
+      username: "Admin Angola Imobiliária",
+      email: email,
+      password: hashedPassword,
+      role: "admin",
+    });
+
+    console.log("Admin user created successfully!");
+    console.log("Email:", email);
+    console.log("ID:", id);
+    process.exit(0);
+  } catch (error: any) {
     console.error("Error creating admin:", error);
     process.exit(1);
   }

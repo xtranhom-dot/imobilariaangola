@@ -1,25 +1,25 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp, boolean, decimal, jsonb } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const users = sqliteTable("users", {
+  id: text("id").primaryKey(),
   username: text("username").notNull(),
   password: text("password").notNull(),
   email: text("email").notNull().unique(),
   role: text("role").default("admin"),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: text("created_at").default(sql`(datetime('now'))`),
 });
 
-export const properties = pgTable("properties", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const properties = sqliteTable("properties", {
+  id: text("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description"),
   propertyType: text("property_type").notNull(),
   purpose: text("purpose").notNull(),
-  price: decimal("price", { precision: 15, scale: 2 }).notNull(),
-  area: decimal("area", { precision: 10, scale: 2 }).notNull(),
+  price: text("price").notNull(),
+  area: text("area").notNull(),
   bedrooms: integer("bedrooms").default(0),
   bathrooms: integer("bathrooms").default(0),
   parking: integer("parking").default(0),
@@ -29,23 +29,23 @@ export const properties = pgTable("properties", {
   address: text("address"),
   location: text("location").notNull(),
   status: text("status").default("available"),
-  featured: boolean("featured").default(false),
-  images: text("images").array().default(sql`ARRAY[]::text[]`),
+  featured: integer("featured", { mode: "boolean" }).default(false),
+  images: text("images", { mode: "json" }).$type<string[]>().default([]),
   coverImage: text("cover_image"),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: text("created_at").default(sql`(datetime('now'))`),
+  updatedAt: text("updated_at").default(sql`(datetime('now'))`),
 });
 
-export const messages = pgTable("messages", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const messages = sqliteTable("messages", {
+  id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull(),
   phone: text("phone"),
   subject: text("subject").notNull(),
   message: text("message").notNull(),
-  propertyId: varchar("property_id"),
-  read: boolean("read").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
+  propertyId: text("property_id"),
+  read: integer("read", { mode: "boolean" }).default(false),
+  createdAt: text("created_at").default(sql`(datetime('now'))`),
 });
 
 export const insertUserSchema = createInsertSchema(users).omit({
