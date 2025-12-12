@@ -1,10 +1,10 @@
-import { 
+import {
   users, properties, messages,
   type User, type InsertUser,
   type Property, type InsertProperty,
   type Message, type InsertMessage
 } from "@shared/schema";
-import { db } from "./db";
+import { db } from "./db.js";
 import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
 
@@ -76,8 +76,8 @@ export class DatabaseStorage implements IStorage {
 
   async createProperty(insertProperty: InsertProperty): Promise<Property> {
     const id = randomUUID();
-    const images: string[] = Array.isArray(insertProperty.images) 
-      ? [...insertProperty.images] 
+    const images: string[] = Array.isArray(insertProperty.images)
+      ? [...insertProperty.images]
       : [];
     const propertyData = {
       ...insertProperty,

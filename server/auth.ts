@@ -1,13 +1,13 @@
 import { Express, Request, Response, NextFunction } from "express";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
-import { storage } from "./storage";
+import { storage } from "./storage.js";
 import { User as SelectUser } from "@shared/schema";
 import jwt from "jsonwebtoken";
 
 declare global {
   namespace Express {
-    interface User extends SelectUser {}
+    interface User extends SelectUser { }
     interface Request {
       user?: SelectUser;
     }
@@ -57,7 +57,7 @@ export function setupAuth(app: Express) {
     console.log("POST /api/login hit with body:", req.body);
     try {
       const { email, password } = req.body;
-      
+
       if (!email || !password) {
         return res.status(400).json({ error: "Email e senha são obrigatórios" });
       }
@@ -74,7 +74,7 @@ export function setupAuth(app: Express) {
 
       const token = generateToken(user);
       const { password: _, ...userWithoutPassword } = user;
-      
+
       res.status(200).json({ ...userWithoutPassword, token });
     } catch (error) {
       console.error("Login error:", error);
@@ -91,19 +91,19 @@ export function setupAuth(app: Express) {
     if (!authHeader?.startsWith("Bearer ")) {
       return res.sendStatus(401);
     }
-    
+
     const token = authHeader.substring(7);
     const decoded = verifyToken(token);
-    
+
     if (!decoded) {
       return res.sendStatus(401);
     }
-    
+
     const user = await storage.getUser(decoded.id);
     if (!user) {
       return res.sendStatus(401);
     }
-    
+
     const { password, ...userWithoutPassword } = user;
     res.json(userWithoutPassword);
   });
@@ -114,19 +114,19 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
   if (!authHeader?.startsWith("Bearer ")) {
     return res.status(401).json({ error: "Não autorizado" });
   }
-  
+
   const token = authHeader.substring(7);
   const decoded = verifyToken(token);
-  
+
   if (!decoded) {
     return res.status(401).json({ error: "Token inválido ou expirado" });
   }
-  
+
   const user = await storage.getUser(decoded.id);
   if (!user) {
     return res.status(401).json({ error: "Usuário não encontrado" });
   }
-  
+
   req.user = user;
   next();
 }

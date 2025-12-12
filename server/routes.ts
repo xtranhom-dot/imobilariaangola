@@ -1,11 +1,11 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./storage.js";
 import { insertPropertySchema, insertMessageSchema } from "@shared/schema";
 import { z } from "zod";
-import { setupAuth, requireAuth } from "./auth";
+import { setupAuth, requireAuth } from "./auth.js";
 import multer from "multer";
-import { uploadToCloudinary, deleteFromCloudinary } from "./cloudinary";
+import { uploadToCloudinary, deleteFromCloudinary } from "./cloudinary.js";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -173,7 +173,7 @@ export async function registerRoutes(
       const properties = await storage.getProperties();
       const messages = await storage.getMessages();
       const unreadMessages = messages.filter(m => !m.read).length;
-      
+
       res.json({
         totalProperties: properties.length,
         totalMessages: messages.length,
@@ -194,10 +194,10 @@ export async function registerRoutes(
       if (!files || files.length === 0) {
         return res.status(400).json({ error: "Nenhum arquivo enviado" });
       }
-      
+
       const uploadPromises = files.map(file => uploadToCloudinary(file.buffer));
       const urls = await Promise.all(uploadPromises);
-      
+
       res.json({ urls });
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -212,7 +212,7 @@ export async function registerRoutes(
       if (!url) {
         return res.status(400).json({ error: "URL da imagem não fornecida" });
       }
-      
+
       await deleteFromCloudinary(url);
       res.status(204).send();
     } catch (error) {

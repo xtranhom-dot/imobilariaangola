@@ -1,6 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import cors from "cors";
-import { registerRoutes } from "../server/routes";
+import { registerRoutes } from "../server/routes.js";
 import { createServer } from "http";
 
 const app = express();
@@ -27,7 +27,7 @@ let initError: Error | null = null;
 async function initializeApp() {
   if (initialized) return;
   if (initError) throw initError;
-  
+
   try {
     await registerRoutes(httpServer, app);
     initialized = true;
@@ -44,8 +44,8 @@ export default async function handler(req: Request, res: Response) {
     app(req, res);
   } catch (error) {
     console.error("Handler error:", error);
-    res.status(500).json({ 
-      error: "Internal server error", 
+    res.status(500).json({
+      error: "Internal server error",
       message: error instanceof Error ? error.message : "Unknown error"
     });
   }
