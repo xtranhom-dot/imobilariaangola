@@ -54,6 +54,7 @@ export function setupAuth(app: Express) {
   }
 
   app.post("/api/login", async (req: Request, res: Response) => {
+    console.log("POST /api/login hit with body:", req.body);
     try {
       const { email, password } = req.body;
       
