@@ -75,6 +75,7 @@ export default function AdminPropertyForm() {
 
     try {
       const token = getAuthToken();
+      console.log("Uploading with token:", token ? "Token present" : "No token");
       const res = await fetch("/api/upload", {
         method: "POST",
         headers: {
