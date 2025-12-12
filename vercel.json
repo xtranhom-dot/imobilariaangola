@@ -28,5 +28,10 @@
         }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/[...route].ts": {
+      "includeFiles": "server/**"
+    }
+  }
 }
