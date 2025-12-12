@@ -1,12 +1,15 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile } from "fs/promises";
+import { rm, readFile, mkdir, copyFile } from "fs/promises";
+import { existsSync } from "fs";
 
 // server deps to bundle to reduce openat(2) syscalls
 // which helps cold start times
 const allowlist = [
   "@google/generative-ai",
+  "@libsql/client",
   "axios",
+  "cloudinary",
   "connect-pg-simple",
   "cors",
   "date-fns",
@@ -57,6 +60,22 @@ async function buildAll() {
     },
     minify: true,
     external: externals,
+    logLevel: "info",
+  });
+
+  // Build API function for Vercel serverless
+  console.log("building api function for vercel...");
+  await esbuild({
+    entryPoints: ["api/index.ts"],
+    platform: "node",
+    bundle: true,
+    format: "esm",
+    outfile: "api/index.js",
+    define: {
+      "process.env.NODE_ENV": '"production"',
+    },
+    minify: true,
+    external: ["@libsql/client"],
     logLevel: "info",
   });
 }
