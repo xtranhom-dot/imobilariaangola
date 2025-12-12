@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
+import { getAuthToken } from "@/lib/queryClient";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -73,8 +74,12 @@ export default function AdminPropertyForm() {
     });
 
     try {
+      const token = getAuthToken();
       const res = await fetch("/api/upload", {
         method: "POST",
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: formData,
       });
       if (!res.ok) throw new Error("Upload failed");
@@ -102,9 +107,13 @@ export default function AdminPropertyForm() {
 
   const handleRemoveImage = async (imageUrl: string) => {
     try {
+      const token = getAuthToken();
       await fetch("/api/upload", {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({ url: imageUrl }),
       });
       const newImages = uploadedImages.filter((img) => img !== imageUrl);
