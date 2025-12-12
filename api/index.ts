@@ -1,8 +1,13 @@
 import express, { type Request, Response, NextFunction } from "express";
+import cors from "cors";
 import { registerRoutes } from "../server/routes";
 import { createServer } from "http";
 
 const app = express();
+
+// Allow CORS and respond to preflight OPTIONS requests
+app.use(cors());
+app.options("/*", (_req, res) => res.sendStatus(204));
 
 app.use(
   express.json({
