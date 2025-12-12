@@ -22,7 +22,9 @@ async function createAdmin() {
     // Check if admin already exists
     const [existing] = await db.select().from(users).where(eq(users.email, email));
     if (existing) {
-      console.log("Admin user already exists with this email.");
+      console.log("Admin user exists. Updating password...");
+      await db.update(users).set({ password: hashedPassword }).where(eq(users.email, email));
+      console.log("Password updated successfully!");
       process.exit(0);
     }
 
