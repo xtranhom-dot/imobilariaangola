@@ -419,6 +419,30 @@ export default function AdminPropertyForm() {
                 />
               </div>
             </div>
+
+            {/* Características / Comodidades */}
+            <div className="bg-white p-6 rounded-lg border shadow-sm space-y-6">
+              <h3 className="text-lg font-bold border-b pb-4">Comodidades e Características</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {AVAILABLE_FEATURES.map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`feature-${feature}`}
+                      checked={(watch("features") || []).includes(feature)}
+                      onCheckedChange={(checked) => {
+                        const currentFeatures = watch("features") || [];
+                        if (checked) {
+                          setValue("features", [...currentFeatures, feature]);
+                        } else {
+                          setValue("features", currentFeatures.filter((f) => f !== feature));
+                        }
+                      }}
+                    />
+                    <Label htmlFor={`feature-${feature}`} className="cursor-pointer">{feature}</Label>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Upload de Imagens */}
