@@ -49,6 +49,26 @@ export async function registerRoutes(
     }
   });
 
+  app.get("/api/debug/inspect", async (req, res) => {
+    try {
+      const allProps = await storage.getProperties();
+      const debugData = allProps.map(p => ({
+        id: p.id,
+        idLength: p.id.length,
+        // Show character codes to spot hidden chars
+        idCodes: p.id.split('').map(c => c.charCodeAt(0)),
+        title: p.title
+      }));
+      res.json({
+        count: allProps.length,
+        // Only show first 20 to avoid massive payload, but include our target if possible
+        items: debugData
+      });
+    } catch (e) {
+      res.status(500).json({ error: String(e) });
+    }
+  });
+
   app.get("/api/properties/:id", async (req, res) => {
     try {
       const requestedId = req.params.id.trim();
