@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
-import { apiRequest } from "@/lib/queryClient";
+
 import { getAuthToken } from "@/lib/queryClient";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -430,8 +430,8 @@ export default function AdminPropertyForm() {
                       id={`feature-${feature}`}
                       checked={(watch("features") || []).includes(feature)}
                       onCheckedChange={(checked) => {
-                        const currentFeatures = watch("features") || [];
-                        if (checked) {
+                        const currentFeatures = (watch("features") || []) as string[];
+                        if (checked === true) {
                           setValue("features", [...currentFeatures, feature]);
                         } else {
                           setValue("features", currentFeatures.filter((f) => f !== feature));

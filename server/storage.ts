@@ -84,7 +84,7 @@ export class DatabaseStorage implements IStorage {
       id,
       images,
     };
-    await db.insert(properties).values(propertyData);
+    await db.insert(properties).values(propertyData as any);
     const [property] = await db.select().from(properties).where(eq(properties.id, id));
     return property;
   }
