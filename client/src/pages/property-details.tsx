@@ -109,15 +109,16 @@ export default function PropertyDetails() {
               </div>
             )}
             {propertyImages[3] && (
-            <div className="relative group overflow-hidden rounded-xl cursor-pointer">
-              <img src={propertyImages[3]} alt="Detail View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="text-white font-bold uppercase tracking-widest text-sm border border-white px-4 py-2">Ver Todas</span>
+              <div className="relative group overflow-hidden rounded-xl cursor-pointer">
+                <img src={propertyImages[3]} alt="Detail View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-white font-bold uppercase tracking-widest text-sm border border-white px-4 py-2">Ver Todas</span>
+                </div>
               </div>
-            </div>
+            )}
             <div className="relative group overflow-hidden rounded-xl cursor-pointer bg-[hsl(350,85%,15%)] flex items-center justify-center text-white flex-col gap-2">
-                 <span className="text-3xl font-serif font-bold">+12</span>
-                 <span className="text-xs uppercase tracking-widest">Fotos</span>
+              <span className="text-3xl font-serif font-bold">+12</span>
+              <span className="text-xs uppercase tracking-widest">Fotos</span>
             </div>
           </div>
         </div>
