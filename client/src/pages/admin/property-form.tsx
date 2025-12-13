@@ -15,6 +15,23 @@ import { ArrowLeft, Upload, Trash2, ImagePlus, X, Loader2 } from "lucide-react";
 import { Link, useRoute, useLocation } from "wouter";
 import { insertPropertySchema, type InsertProperty } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
+import { Checkbox } from "@/components/ui/checkbox";
+
+const AVAILABLE_FEATURES = [
+  "Piscina Privativa",
+  "Jardim Paisagístico",
+  "Cozinha Gourmet",
+  "Ar Condicionado Central",
+  "Segurança 24h",
+  "Acabamentos em Mármore",
+  "Sistema de Domótica",
+  "Escritório",
+  "Varanda Gourmet",
+  "Ginásio",
+  "Vista Mar",
+  "Elevador",
+  "Gerador"
+];
 
 export default function AdminPropertyForm() {
   const [, navigate] = useLocation();
@@ -50,6 +67,7 @@ export default function AdminPropertyForm() {
       images: [],
       featured: false,
       status: "available",
+      features: [],
     },
   });
 

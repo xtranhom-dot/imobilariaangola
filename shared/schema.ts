@@ -31,6 +31,7 @@ export const properties = sqliteTable("properties", {
   status: text("status").default("available"),
   featured: integer("featured", { mode: "boolean" }).default(false),
   images: text("images", { mode: "json" }).$type<string[]>().default([]),
+  features: text("features", { mode: "json" }).$type<string[]>().default([]),
   coverImage: text("cover_image"),
   createdAt: text("created_at").default(sql`(datetime('now'))`),
   updatedAt: text("updated_at").default(sql`(datetime('now'))`),
