@@ -10,22 +10,21 @@ export function About() {
         <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
           <div className="space-y-6 md:space-y-8 order-2 lg:order-1">
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl leading-tight">
-              Fundada em fevereiro <br className="hidden md:block" />
-              de 2023 em Lisboa,
+              Sobre Nós
             </h2>
 
             <div className="space-y-4 md:space-y-6 text-white/80 font-light leading-relaxed text-sm md:text-base">
               <p>
-                E expandindo suas operações para o Sul do Brasil em 2024, a Angola Imobiliária se estabeleceu como um ícone disruptivo de inovação e excelência no mercado imobiliário.
+                Somos uma corretora de imóveis localizada na Centralidade do Sequele, dedicada a oferecer soluções imobiliárias seguras, transparentes e de alta qualidade para os nossos clientes.
               </p>
               <p>
-                Nossa missão é transformar a experiência em algo extraordinário e proporcionar uma jornada de compra e venda transparente, segura e satisfatória.
+                A nossa atuação é baseada em transparência, confiança e compromisso, acompanhando cada cliente em todas as etapas do processo de compra, venda ou arrendamento de imóveis, com total clareza e profissionalismo.
               </p>
               <p>
-                Os nossos recursos como tours virtuais 3D e análises detalhadas do mercado são projetados para garantir decisões informadas e vantajosas, onde quer que você esteja.
+                A corretora é liderada por Hilário da Silva, corretor-chefe da Angola Imobiliária, profissional com experiência no mercado imobiliário nacional, reconhecido pela sua seriedade, ética e profundo conhecimento do setor.
               </p>
               <p>
-                Escolher a Angola Imobiliária significa entrar em uma jornada única, conduzida por especialistas apaixonados e dedicados a exceder suas expectativas em cada etapa.
+                O nosso objetivo é transformar o sonho da casa própria ou do investimento imobiliário numa experiência segura, simples e satisfatória, garantindo que cada cliente faça negócios com tranquilidade e confiança.
               </p>
             </div>
 
