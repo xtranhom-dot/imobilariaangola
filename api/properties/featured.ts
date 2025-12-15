@@ -9,7 +9,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const featuredProperties = await db
             .select()
             .from(properties)
-            .where(eq(properties.featured, true))
+            .where(eq(properties.featured, 1))
             .limit(6);
 
         res.status(200).json(featuredProperties);
