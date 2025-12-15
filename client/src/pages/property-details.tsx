@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, BedDouble, Bath, Square, Calendar, CheckCircle2, Share2, Heart, Phone, Mail } from "lucide-react";
+import { MapPin, BedDouble, Bath, Square, Calendar, CheckCircle2, Share2, Heart, Phone, Mail, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { PropertyCard } from "@/components/ui/property-card";
 
 
@@ -23,6 +23,10 @@ export default function PropertyDetails() {
     email: "",
     message: "Olá, gostaria de mais informações sobre este imóvel..."
   });
+
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Fetch current property
   const { data: property, isLoading } = useQuery<Property>({
@@ -86,32 +90,37 @@ export default function PropertyDetails() {
         {/* Gallery Section */}
         <div className="container mx-auto px-4 mb-10">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-[50vh] md:h-[60vh]">
-            <div className="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-xl cursor-pointer">
+            <div
+              className="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-xl cursor-pointer"
+              onClick={() => { setCurrentImageIndex(0); setLightboxOpen(true); }}
+            >
               <img src={propertyImages[0]} alt="Main View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
             </div>
             {propertyImages[1] && (
-              <div className="relative group overflow-hidden rounded-xl cursor-pointer">
+              <div
+                className="relative group overflow-hidden rounded-xl cursor-pointer"
+                onClick={() => { setCurrentImageIndex(1); setLightboxOpen(true); }}
+              >
                 <img src={propertyImages[1]} alt="Interior View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               </div>
             )}
             {propertyImages[2] && (
-              <div className="relative group overflow-hidden rounded-xl cursor-pointer">
+              <div
+                className="relative group overflow-hidden rounded-xl cursor-pointer"
+                onClick={() => { setCurrentImageIndex(2); setLightboxOpen(true); }}
+              >
                 <img src={propertyImages[2]} alt="Exterior View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               </div>
             )}
             {propertyImages[3] && (
-              <div className="relative group overflow-hidden rounded-xl cursor-pointer">
+              <div
+                className="relative group overflow-hidden rounded-xl cursor-pointer"
+                onClick={() => { setCurrentImageIndex(3); setLightboxOpen(true); }}
+              >
                 <img src={propertyImages[3]} alt="Detail View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-white font-bold uppercase tracking-widest text-sm border border-white px-4 py-2">Ver Todas</span>
-                </div>
               </div>
             )}
-            <div className="relative group overflow-hidden rounded-xl cursor-pointer bg-[hsl(350,85%,15%)] flex items-center justify-center text-white flex-col gap-2">
-              <span className="text-3xl font-serif font-bold">+12</span>
-              <span className="text-xs uppercase tracking-widest">Fotos</span>
-            </div>
           </div>
         </div>
 
@@ -291,6 +300,43 @@ export default function PropertyDetails() {
 
         </div>
       </main>
+
+      {/* Image Lightbox Modal */}
+      {lightboxOpen && (
+        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
+          <button
+            onClick={() => setLightboxOpen(false)}
+            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+          >
+            <X className="w-8 h-8" />
+          </button>
+
+          <button
+            onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? propertyImages.length - 1 : prev - 1))}
+            className="absolute left-4 text-white hover:text-gray-300 transition-colors"
+          >
+            <ChevronLeft className="w-12 h-12" />
+          </button>
+
+          <div className="max-w-6xl max-h-[90vh] w-full px-4">
+            <img
+              src={propertyImages[currentImageIndex]}
+              alt={`Foto ${currentImageIndex + 1}`}
+              className="w-full h-full object-contain"
+            />
+            <p className="text-white text-center mt-4">
+              {currentImageIndex + 1} / {propertyImages.length}
+            </p>
+          </div>
+
+          <button
+            onClick={() => setCurrentImageIndex((prev) => (prev === propertyImages.length - 1 ? 0 : prev + 1))}
+            className="absolute right-4 text-white hover:text-gray-300 transition-colors"
+          >
+            <ChevronRight className="w-12 h-12" />
+          </button>
+        </div>
+      )}
 
       <Footer />
     </div>
