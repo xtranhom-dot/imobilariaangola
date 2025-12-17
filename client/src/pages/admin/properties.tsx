@@ -37,6 +37,15 @@ export default function AdminProperties() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/properties"] });
     },
+    onError: (error: any) => {
+      // show a basic alert so admin knows why deletion failed
+      try {
+        const msg = error?.message || "Falha ao excluir imóvel";
+        alert(`Erro ao excluir imóvel: ${msg}`);
+      } catch (e) {
+        console.error("Error showing delete error", e);
+      }
+    }
   });
 
   const toggleFeaturedMutation = useMutation({

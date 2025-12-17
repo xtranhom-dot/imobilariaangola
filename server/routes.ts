@@ -140,7 +140,31 @@ export async function registerRoutes(
 
   app.delete("/api/properties/:id", requireAuth, async (req, res) => {
     try {
-      await storage.deleteProperty(req.params.id);
+      const propertyId = req.params.id;
+      console.log(`[DEBUG] DELETE /api/properties/${propertyId} requested by user=${(req as any).user?.id}`);
+
+      const existing = await storage.getProperty(propertyId);
+      if (!existing) {
+        console.log(`[DEBUG] Property not found: ${propertyId}`);
+        return res.status(404).json({ error: "Property not found" });
+      }
+
+      // attempt to remove images from cloudinary (best-effort)
+      try {
+        if (existing.coverImage) {
+          await deleteFromCloudinary(existing.coverImage as any);
+        }
+        if (Array.isArray(existing.images)) {
+          for (const img of existing.images) {
+            if (img) await deleteFromCloudinary(img as any);
+          }
+        }
+      } catch (imgErr) {
+        console.error("Error deleting images from Cloudinary (continuing):", imgErr);
+      }
+
+      await storage.deleteProperty(propertyId);
+      console.log(`[DEBUG] Property deleted: ${propertyId}`);
       res.status(204).send();
     } catch (error) {
       console.error("Error deleting property:", error);
