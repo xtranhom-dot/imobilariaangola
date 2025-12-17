@@ -24,20 +24,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (existing) {
       // update password
-      await (await import('../../server/db.js')).then(async ({ db }) => {
-        const { users } = await import('../../shared/schema.js');
-        const { eq } = await import('drizzle-orm');
-        await db.update(users).set({ password: hashed }).where(eq(users.email, email));
-      });
+      const { db } = await import('../../server/db.js');
+      const { users } = await import('../../shared/schema.js');
+      const { eq } = await import('drizzle-orm');
+      await db.update(users).set({ password: hashed }).where(eq(users.email, email));
       return res.status(200).json({ ok: true, message: 'Admin updated', email });
     }
 
     const username = process.env.CREATE_ADMIN_USERNAME || 'Admin';
     const id = (await import('crypto')).randomUUID();
-    await (await import('../../server/db.js')).then(async ({ db }) => {
-      const { users } = await import('../../shared/schema.js');
-      await db.insert(users).values({ id, username, email, password: hashed, role: 'admin' } as any);
-    });
+    const { db } = await import('../../server/db.js');
+    const { users } = await import('../../shared/schema.js');
+    await db.insert(users).values({ id, username, email, password: hashed, role: 'admin' } as any);
 
     return res.status(201).json({ ok: true, message: 'Admin created', email });
   } catch (err: any) {
