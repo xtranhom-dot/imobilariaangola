@@ -1,5 +1,5 @@
 import { useParams, useLocation } from "wouter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Property } from "@shared/schema";
 import { Header } from "@/components/layout/Header";
@@ -40,6 +40,72 @@ export default function PropertyDetails() {
 
   console.log(`[DEBUG Client] ID from params:`, params.id);
   console.log(`[DEBUG Client] Property data:`, property);
+
+  useEffect(() => {
+    if (!property) return;
+    const p: any = property as any;
+    const origin = (typeof window !== 'undefined' && window.location && window.location.origin) ? window.location.origin : (process.env.SITE_URL || `http://localhost:${process.env.PORT || 5000}`);
+    const title = `${p.title} — Angola Imobiliária`;
+    document.title = title;
+    const desc = (p.description || '').slice(0, 160);
+
+    const setMeta = (attr: 'name' | 'property', key: string, value: string) => {
+      const selector = attr === 'name' ? `meta[name="${key}"]` : `meta[property="${key}"]`;
+      let el = document.head.querySelector(selector) as HTMLMetaElement | null;
+      if (!el) {
+        el = document.createElement('meta');
+        if (attr === 'name') el.setAttribute('name', key); else el.setAttribute('property', key);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', value);
+    };
+
+    setMeta('name', 'description', desc);
+    setMeta('property', 'og:title', title);
+    setMeta('property', 'og:description', desc);
+    setMeta('property', 'og:image', p.coverImage && String(p.coverImage).startsWith('http') ? String(p.coverImage) : `${origin}${p.coverImage || '/attached_assets/opengraph.jpg'}`);
+    setMeta('name', 'twitter:title', title);
+    setMeta('name', 'twitter:description', desc);
+    setMeta('name', 'twitter:image', p.coverImage && String(p.coverImage).startsWith('http') ? String(p.coverImage) : `${origin}${p.coverImage || '/attached_assets/opengraph.jpg'}`);
+
+    let linkCanonical = document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!linkCanonical) {
+      linkCanonical = document.createElement('link');
+      linkCanonical.setAttribute('rel', 'canonical');
+      document.head.appendChild(linkCanonical);
+    }
+    linkCanonical.href = `${origin}/properties/${p.id}`;
+
+    // JSON-LD structured data
+    const ldId = 'ld-json-property';
+    let ld = document.getElementById(ldId) as HTMLScriptElement | null;
+    const jsonLd: any = {
+      "@context": "https://schema.org",
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Residence",
+        "name": p.title,
+        "description": p.description,
+        "image": (p.images || []).map((i: string) => (String(i).startsWith('http') ? i : `${origin}${i}`)),
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": p.municipality,
+          "addressRegion": p.province
+        }
+      },
+      "price": p.price,
+      "priceCurrency": "AOA",
+      "url": `${origin}/properties/${p.id}`,
+      "seller": { "@type": "RealEstateAgent", "name": "Angola Imobiliária" }
+    };
+    if (!ld) {
+      ld = document.createElement('script');
+      ld.type = 'application/ld+json';
+      ld.id = ldId;
+      document.head.appendChild(ld);
+    }
+    ld.textContent = JSON.stringify(jsonLd);
+  }, [property]);
 
 
   if (isLoading) {
@@ -94,7 +160,7 @@ export default function PropertyDetails() {
               className="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-xl cursor-pointer"
               onClick={() => { setCurrentImageIndex(0); setLightboxOpen(true); }}
             >
-              <img src={propertyImages[0]} alt="Main View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img src={propertyImages[0]} alt={`${property.title} - Foto 1`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
             </div>
             {propertyImages[1] && (
@@ -102,7 +168,7 @@ export default function PropertyDetails() {
                 className="relative group overflow-hidden rounded-xl cursor-pointer"
                 onClick={() => { setCurrentImageIndex(1); setLightboxOpen(true); }}
               >
-                <img src={propertyImages[1]} alt="Interior View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <img src={propertyImages[1]} alt={`${property.title} - Foto 2`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               </div>
             )}
             {propertyImages[2] && (
@@ -110,7 +176,7 @@ export default function PropertyDetails() {
                 className="relative group overflow-hidden rounded-xl cursor-pointer"
                 onClick={() => { setCurrentImageIndex(2); setLightboxOpen(true); }}
               >
-                <img src={propertyImages[2]} alt="Exterior View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <img src={propertyImages[2]} alt={`${property.title} - Foto 3`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               </div>
             )}
             {propertyImages[3] && (
@@ -118,7 +184,7 @@ export default function PropertyDetails() {
                 className="relative group overflow-hidden rounded-xl cursor-pointer"
                 onClick={() => { setCurrentImageIndex(3); setLightboxOpen(true); }}
               >
-                <img src={propertyImages[3]} alt="Detail View" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <img src={propertyImages[3]} alt={`${property.title} - Foto 4`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               </div>
             )}
           </div>
@@ -213,7 +279,7 @@ export default function PropertyDetails() {
 
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#FFD700]">
-                    <img src="/attached_assets/generated_images/professional_real_estate_team_of_three_people.png" alt="Agent" className="w-full h-full object-cover" />
+                    <img src="/attached_assets/generated_images/professional_real_estate_team_of_three_people.png" alt="Foto do Corretor Hilario Silva" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <p className="font-bold text-[hsl(350,85%,15%)]">Hilario Silva</p>

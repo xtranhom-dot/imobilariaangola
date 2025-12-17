@@ -262,5 +262,32 @@ export async function registerRoutes(
     }
   });
 
+  // Sitemap endpoint (dynamic). Set SITE_URL env var to production domain (e.g. https://www.example.com)
+  app.get('/sitemap.xml', async (_req, res) => {
+    try {
+      const siteUrl = process.env.SITE_URL || `http://localhost:${process.env.PORT || 5000}`;
+
+      const escapeXml = (str: string) =>
+        String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&apos;');
+
+      const properties = await storage.getProperties();
+      const urls = properties
+        .map(p => `\n    <url>\n      <loc>${escapeXml(`${siteUrl}/properties/${p.id}`)}</loc>\n      <changefreq>weekly</changefreq>\n      <priority>0.7</priority>\n    </url>`)
+        .join('');
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${escapeXml(siteUrl)}</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>${escapeXml(`${siteUrl}/properties`)}</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>${urls}\n</urlset>`;
+
+      res.header('Content-Type', 'application/xml').send(xml);
+    } catch (e) {
+      console.error('Error generating sitemap', e);
+      res.status(500).send('Error generating sitemap');
+    }
+  });
+
   return httpServer;
 }

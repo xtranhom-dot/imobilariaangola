@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Replace YOUR_DOMAIN with your actual domain (e.g. https://www.exemplo.com)
+Sitemap: https://YOUR_DOMAIN/sitemap.xml
+
+# Crawl-delay can be specified if necessary
+# Crawl-delay: 10
