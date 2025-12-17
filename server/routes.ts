@@ -277,10 +277,18 @@ export async function registerRoutes(
 
       const properties = await storage.getProperties();
       const urls = properties
-        .map(p => `\n    <url>\n      <loc>${escapeXml(`${siteUrl}/properties/${p.id}`)}</loc>\n      <changefreq>weekly</changefreq>\n      <priority>0.7</priority>\n    </url>`)
+        .map(p => {
+          const loc = `${siteUrl}/properties/${p.id}`;
+          const lastmod = p.updatedAt || p.createdAt || null;
+          const lastmodTag = lastmod ? `\n      <lastmod>${escapeXml(new Date(lastmod).toISOString())}</lastmod>` : "";
+          const image = (p.coverImage && String(p.coverImage).startsWith('http')) ? String(p.coverImage) : (p.coverImage ? `${siteUrl}${p.coverImage}` : (p.images && p.images[0] ? (String(p.images[0]).startsWith('http') ? String(p.images[0]) : `${siteUrl}${p.images[0]}`) : null));
+          const imageTag = image ? `\n      <image:image>\n        <image:loc>${escapeXml(image)}</image:loc>\n      </image:image>` : "";
+
+          return `\n    <url>\n      <loc>${escapeXml(loc)}</loc>${lastmodTag}\n      <changefreq>weekly</changefreq>\n      <priority>0.7</priority>${imageTag}\n    </url>`;
+        })
         .join('');
 
-      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${escapeXml(siteUrl)}</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>${escapeXml(`${siteUrl}/properties`)}</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>${urls}\n</urlset>`;
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n  <url>\n    <loc>${escapeXml(siteUrl)}</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>${escapeXml(`${siteUrl}/properties`)}</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>${urls}\n</urlset>`;
 
       res.header('Content-Type', 'application/xml').send(xml);
     } catch (e) {
